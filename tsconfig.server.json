@@ -1,0 +1,11 @@
+/* Server bundle only — keeps browser `ng build` from pulling in server.ts / main.server.ts */
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/server"
+  },
+  "files": [
+    "server.ts",
+    "src/main.server.ts"
+  ]
+}

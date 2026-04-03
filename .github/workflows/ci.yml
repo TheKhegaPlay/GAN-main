@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (production ng build — AOT + strict templates)
+        run: npm run lint
+
+      - name: Build SSR server bundle
+        run: npm run build:server
+
+      - name: SSR artifacts ready
+        run: test -f dist/gan-front/server/main.js && test -f dist/gan-front/server/index.server.html
+
+      - name: Unit tests (Karma)
+        run: npm run test:ci
+        env:
+          CHROME_BIN: google-chrome
+
+      - name: Upload unit-test JUnit results
+        uses: actions/upload-artifact@v3
+        with:
+          name: karma-junit-results
+          path: test-results/junit-results.xml
+
+      - name: Lighthouse CI
+        run: npm run lhci

@@ -1,0 +1,8 @@
+Date,Environment,Stage,Duration_Seconds,Result,Pass_Fail,Lighthouse_Performance,Lighthouse_Accessibility,Lighthouse_Best_Practices,Lighthouse_SEO,Test_Coverage_Lines,Test_Coverage_Branches,LCP_Seconds,CLS_Value,FCP_Seconds,TTFB_Milliseconds,Build_Status,Notes
+2026-03-28,Local,Checkout,5,PASS,✓,,,,,,,,,,,PASS,Manual baseline run
+2026-03-28,Local,Lint,45,PASS,✓,,,,,,,,,,,PASS,No type errors
+2026-03-28,Local,Build_Server,90,PASS,✓,,,,,,,,,,,PASS,SSR bundle created successfully
+2026-03-28,Local,Build_Browser,90,PASS,✓,,,,,,,,,,,PASS,Browser bundle created
+2026-03-28,Local,Unit_Tests,120,PASS,✓,,,,,,80,75,,,PASS,All tests passed
+2026-03-28,Local,Lighthouse,180,PASS,✓,42,78,83,72,,,3.5,0.18,2.3,1200,PASS,Initial baseline performance
+2026-03-28,GitHub_Actions,Full_Pipeline,450,PASS,✓,42,78,83,72,80,75,3.5,0.18,2.3,1200,PASS,GitHub Actions first run

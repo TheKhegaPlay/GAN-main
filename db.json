@@ -1,0 +1,37 @@
+{
+  "auth": {
+    "login": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkRlbW8gVXNlciIsImVtYWlsIjoiZGVtb0Bmb3JlbnNpY3MuZ292In0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+      "user": {
+        "id": 1,
+        "email": "demo@forensics.gov",
+        "name": "Demo User",
+        "role": "investigator"
+      },
+      "expiresIn": 3600
+    }
+  },
+  "users": [
+    {
+      "id": 1,
+      "email": "demo@forensics.gov",
+      "password": "demo123",
+      "name": "Demo User",
+      "role": "investigator"
+    },
+    {
+      "id": 2,
+      "email": "jane.smith@forensics.gov",
+      "password": "SecurePass456!",
+      "name": "Jane Smith",
+      "role": "analyst"
+    }
+  ],
+  "dashboard": {
+    "stats": {
+      "cases": 42,
+      "evidence": 156,
+      "reports": 28
+    }
+  }
+}

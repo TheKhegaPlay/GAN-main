@@ -1,0 +1,14 @@
+{
+  "ci": {
+    "collect": {
+      "numberOfRuns": 1,
+      "startServerCommand": "npm run serve:ssr",
+      "startServerReadyPattern": "listening",
+      "url": ["http://localhost:4000/", "http://localhost:4000/login"],
+      "settings": {
+        "preset": "desktop",
+        "onlyCategories": ["performance", "accessibility", "best-practices", "seo"]
+      }
+    }
+  }
+}

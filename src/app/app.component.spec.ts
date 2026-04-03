@@ -1,0 +1,40 @@
+import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { ForensicStateService } from './services/forensic-state.service';
+import { of } from 'rxjs';
+
+describe('AppComponent', () => {
+  let mockForensicStateService: jasmine.SpyObj<ForensicStateService>;
+
+  beforeEach(async () => {
+    mockForensicStateService = jasmine.createSpyObj('ForensicStateService', ['getState$', 'addEvidence', 'updateEvidenceStatus', 'deleteEvidence']);
+    mockForensicStateService.getState$.and.returnValue(of({
+      cases: [],
+      currentGANModel: 'esrgan'
+    }));
+
+    await TestBed.configureTestingModule({
+      imports: [AppComponent],
+      providers: [{ provide: ForensicStateService, useValue: mockForensicStateService }]
+    }).compileComponents();
+  });
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it(`should have the 'gan-front' title`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('gan-front');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('Digital Forensics Platform');
+  });
+});

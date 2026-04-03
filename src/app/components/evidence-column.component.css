@@ -1,0 +1,6 @@
+.column { background:#fafafa; border:1px solid #e0e0e0; padding:10px; border-radius:6px; min-width:220px; }
+.add-form { display:flex; gap:6px; margin-bottom:8px; }
+.add-form input { flex:1; padding:6px; }
+.add-form select { padding:6px; }
+.items { display:flex; flex-direction:column; gap:8px; }
+.empty { color:#888; padding:8px; }

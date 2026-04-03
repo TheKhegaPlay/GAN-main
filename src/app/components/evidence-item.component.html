@@ -1,0 +1,11 @@
+<div class="evidence-item">
+  <div class="meta">
+    <div class="filename">{{ evidence.filename }}</div>
+    <div class="model">{{ evidence.ganModel }}</div>
+    <div class="status">{{ evidence.status }}</div>
+  </div>
+  <div class="controls">
+    <button (click)="onAdvance()" [disabled]="evidence.status === 'restored'">Advance</button>
+    <button (click)="onRemove()" class="danger">Delete</button>
+  </div>
+</div>

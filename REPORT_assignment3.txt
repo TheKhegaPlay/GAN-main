@@ -1,0 +1,284 @@
+Assignment 3 — CVA & Dynamic Forms (Updated report with detailed code analysis)
+
+1. Overview
+This report describes the implemented ControlValueAccessor (CVA) example and the dynamic form engine in the Angular project "Intelligent forensic platform based on GAN models". The content was updated to match the current repository state and exact file locations with detailed code explanations.
+
+2. What was implemented (summary)
+- StarRatingComponent: a reusable CVA component implementing ControlValueAccessor and Validator.
+- DynamicFormService: builds FormGroup from FieldConfig and maps validator metadata to Angular Validators.
+- DynamicFormComponent: renders fields from metadata and binds them to Reactive Forms.
+- Field model: FieldConfig and FieldType definitions.
+- App integration: sample dynamicConfig demonstrating required validators and rating field.
+
+3. Files and key code locations (with code quotes and explanations)
+
+--- StarRatingComponent (CVA + Validator) ---
+File: src/app/dynamic-forms/star-rating.component.ts
+
+Purpose: Demonstrates full CVA implementation with built-in validation support. This component can be used standalone or integrated into the dynamic form renderer.
+
+Key code quote 1 - CVA provider registration:
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StarRatingComponent), multi: true },
+    { provide: NG_VALIDATORS, useExisting: forwardRef(() => StarRatingComponent), multi: true }
+  ]
+Explanation: Registers the component as a ControlValueAccessor and Validator with Angular's dependency injection system. This allows the component to work seamlessly with [formControl] and form validation.
+
+Key code quote 2 - CVA interface method (writeValue):
+  writeValue(obj: any): void {
+    this.value = typeof obj === 'number' && obj > 0 ? obj : 0;
+  }
+Explanation: Called by Angular when the form control's value changes programmatically. Converts incoming value to a number; defaults to 0 if invalid.
+
+Key code quote 3 - CVA interface methods (registerOnChange and registerOnTouched):
+  registerOnChange(fn: any): void { this.onChange = fn; }
+  registerOnTouched(fn: any): void { this.onTouched = fn; }
+Explanation: Stores callbacks used to notify the parent form when the user changes the value or interacts with the control (touched state).
+
+Key code quote 4 - CVA interface method (setDisabledState):
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+Explanation: Called when the parent form control is disabled/enabled. Updates the component's disabled state.
+
+Key code quote 5 - Validator interface method (validate):
+  validate(control: AbstractControl): ValidationErrors | null {
+    if (this.required && (!this.value || this.value === 0)) {
+      return { required: true };
+    }
+    return null;
+  }
+Explanation: Implements the Validator interface. Checks if the field is required and empty, returning { required: true } to indicate validation failure. This result is merged into the parent FormControl's errors.
+
+Key code quote 6 - setValue method (user interaction):
+  setValue(v: number): void {
+    if (this.disabled) return;
+    this.value = v;
+    this.onChange(this.value);
+    this.onTouched();
+  }
+Explanation: Called when user selects a star. Updates internal value, notifies the form via onChange callback, and marks the control as touched.
+
+Key code quote 7 - ngOnInit (form validation sync):
+  ngOnInit(): void {
+    this.ngControl?.control?.updateValueAndValidity();
+  }
+Explanation: Forces the parent FormControl to recalculate its validity after the CVA is initialized. Ensures validation state reflects the current component state.
+
+--- DynamicFormService (form builder & validators mapping) ---
+File: src/app/dynamic-forms/dynamic-form.service.ts
+
+Purpose: Converts metadata (FieldConfig array) into a reactive FormGroup with properly mapped validators and default values.
+
+Key code quote 1 - buildGroup method (form creation):
+  buildGroup(fields: FieldConfig[]) {
+    const group: Record<string, any> = {};
+    for (const f of fields) {
+      const validators = this.mapValidators(f.validators || []);
+      let defaultValue: any = null;
+      if (f.type === 'multiselect' || f.type === 'multiselect-search') defaultValue = [];
+      if (f.type === 'checkbox') defaultValue = false;
+      group[f.name] = [{ value: defaultValue, disabled: !!f.disabled }, validators];
+    }
+    return this.fb.group(group);
+  }
+Explanation: Iterates over FieldConfig array, sets appropriate default values (multiselect/multiselect-search -> [], checkbox -> false, otherwise -> null), applies validators, and builds a FormGroup. The second parameter in the array is the validators list.
+
+Key code quote 2 - mapValidators method (required validator):
+  case 'required':
+    arr.push(Validators.required);
+    break;
+Explanation: Maps the 'required' validator name to Angular's built-in Validators.required function.
+
+Key code quote 3 - mapValidators method (min/max validators):
+  case 'min':
+    arr.push(Validators.min(c.args));
+    break;
+  case 'max':
+    arr.push(Validators.max(c.args));
+    break;
+Explanation: Maps 'min' and 'max' validators with their numeric arguments (e.g., { name: 'min', args: 0 }).
+
+Key code quote 4 - mapValidators method (pattern validator):
+  case 'pattern':
+    arr.push(Validators.pattern(c.args));
+    break;
+Explanation: Maps 'pattern' validator with regex pattern as argument (e.g., { name: 'pattern', args: /^[A-Z]+$/ }).
+
+Key code quote 5 - mapValidators method (email validator):
+  case 'email':
+    arr.push(Validators.email);
+    break;
+Explanation: Maps 'email' validator to Angular's built-in Validators.email function.
+
+Key code quote 6 - mapValidators method (phone validator with international format):
+  case 'phone':
+    arr.push(Validators.pattern(/^\+?[1-9]\d{1,14}$/)); // Пример: международный формат
+    break;
+Explanation: Maps 'phone' validator to a custom regex pattern supporting international format (optional +, followed by 1-15 digits, starting with non-zero).
+
+--- DynamicFormComponent (renderer & UI binding) ---
+File: src/app/dynamic-forms/dynamic-form.component.ts
+
+Purpose: Renders form fields dynamically based on FieldConfig and manages user interactions with two-way form binding.
+
+Key code quote 1 - ngOnInit (form group initialization):
+  ngOnInit(): void {
+    this.form = this.df.buildGroup(this.config);
+  }
+Explanation: Creates the FormGroup from the injected FieldConfig array using DynamicFormService. The form is then used in the template with [formGroup]="form".
+
+Key code quote 2 - Rating field rendering (native radio inputs):
+  <input type="radio"
+         class="rating-input"
+         [formControlName]="f.name"
+         [value]="idx + 1"
+         [name]="f.name"
+         aria-hidden="false"
+         [attr.aria-label]="'Rate ' + (idx + 1)" />
+Explanation: Renders 5 radio inputs (one for each star). [formControlName] binds each radio to the corresponding FormControl. [value]="idx + 1" sets the numeric value (1-5). aria-label provides accessibility.
+
+Key code quote 3 - Error message display (required validation):
+  <small *ngIf="form.controls[f.name].errors?.['required']">Поле обязательно для заполнения.</small>
+  <small *ngIf="form.controls[f.name].errors?.['min']">Значение слишком мало.</small>
+  <small *ngIf="form.controls[f.name].errors?.['max']">Значение слишком велико.</small>
+  <small *ngIf="form.controls[f.name].errors?.['pattern']">Неверный формат.</small>
+Explanation: Conditionally renders error messages based on the FormControl's errors object. Each error type corresponds to a specific validator.
+
+Key code quote 4 - Invalid+touched visual state:
+  <div class="field" [class.invalid]="isInvalid(f.name)">
+  ...
+  </div>
+
+  isInvalid(name: string) {
+    const c = this.form.controls[name];
+    return !!(c && c.invalid && (c.touched || c.dirty));
+  }
+Explanation: The "invalid" CSS class is applied when the control is invalid AND (touched OR dirty). The method checks both states to provide appropriate UX feedback.
+
+Key code quote 5 - Multiselect change handler:
+  onMultiSelectChange(fieldName: string, event: Event): void {
+    const control = this.form.get(fieldName);
+    const selectedOptions = control.value || [];
+    const value = (event.target as HTMLInputElement).value;
+    if ((event.target as HTMLInputElement).checked) {
+      control.setValue([...selectedOptions, value]);
+    } else {
+      control.setValue(selectedOptions.filter((v: any) => v !== value));
+    }
+    control.markAsDirty();
+    control.markAsTouched();
+  }
+Explanation: When a checkbox in a multiselect field is toggled, this method adds/removes the value from the control's array, marks the control as dirty and touched for validation display.
+
+Key code quote 6 - Searchable multiselect filter:
+  onSearchChange(fieldName: string, query: string): void {
+    this.searchQueries[fieldName] = query?.toLowerCase() || '';
+  }
+
+  getFilteredOptions(f: FieldConfig) {
+    const q = (this.searchQueries[f.name] || '').trim();
+    if (!f.options) return [];
+    if (!q) return f.options;
+    return f.options.filter(o => String(o.label).toLowerCase().includes(q) || String(o.value).toLowerCase().includes(q));
+  }
+Explanation: onSearchChange stores the search query; getFilteredOptions filters options by matching both label and value against the query string (case-insensitive).
+
+Key code quote 7 - Form submission (mark all as touched if invalid):
+  submit() {
+    if (this.form.valid) {
+      console.log('Dynamic form submit', this.form.value);
+      alert('Форма успешно отправлена (см. консоль)');
+    } else {
+      Object.values(this.form.controls).forEach((ctrl) => (ctrl as AbstractControl).markAsTouched());
+    }
+  }
+Explanation: If the form is valid, logs the data. If invalid, marks all controls as touched to reveal validation errors to the user.
+
+--- Field configuration model ---
+File: src/app/dynamic-forms/dynamic-form.models.ts
+
+Purpose: Defines the metadata structure for describing form fields.
+
+Key code quote 1 - FieldType definition:
+  export type FieldType = 'text' | 'select' | 'checkbox' | 'rating' | 'phone' | 'email' | 'multiselect' | 'multiselect-search';
+Explanation: Union type listing all supported field types. Each type is rendered differently in the DynamicFormComponent.
+
+Key code quote 2 - FieldConfig interface:
+  export interface FieldConfig {
+    name: string;
+    label?: string;
+    type: FieldType;
+    options?: MultiSelectOption[];
+    validators?: ValidatorConfig[];
+    placeholder?: string;
+    disabled?: boolean;
+    multiple?: boolean;
+  }
+Explanation: Defines the shape of field metadata. name is the FormControl name; type determines rendering; validators describe validation rules; options are for select/multiselect fields.
+
+Key code quote 3 - ValidatorConfig interface:
+  export interface ValidatorConfig {
+    name: 'required' | 'min' | 'max' | 'pattern' | 'phone' | 'email';
+    args?: any;
+  }
+Explanation: Represents a single validator rule. name is mapped by DynamicFormService; args (e.g., numeric threshold or regex pattern) are passed to the validator function.
+
+--- App integration ---
+File: src/app/app.component.ts
+
+Purpose: Demonstrates the dynamic form engine with a sample configuration and state management integration.
+
+Key code quote 1 - Sample dynamicConfig (rating field with required validator):
+  { name: 'restoreConfidence', label: 'Restore confidence', type: 'rating', validators: [{ name: 'required' }] }
+Explanation: Defines a rating field bound to 'restoreConfidence' control. The required validator is applied, so the form cannot be submitted until a rating (1-5) is selected.
+
+Key code quote 2 - Sample dynamicConfig (multiselect-search field):
+  { name: 'tags', label: 'Tags (searchable)', type: 'multiselect-search', options: [
+      { label: 'Face', value: 'face' },
+      { label: 'License Plate', value: 'plate' },
+      // ... more options
+    ], validators: [{ name: 'required' }] }
+Explanation: Defines a searchable multiselect field with predefined options. Users can type to filter options and select multiple items.
+
+Key code quote 3 - Sample dynamicConfig (phone field with custom validator):
+  { name: 'phone', label: 'Phone Number', type: 'phone', placeholder: '+1234567890', validators: [
+      { name: 'required' },
+      { name: 'phone' }
+    ] }
+Explanation: Phone field with two validators: required (field must not be empty) and phone (must match international format pattern).
+
+Key code quote 4 - Sample dynamicConfig (email field with custom validator):
+  { name: 'email', label: 'Email Address', type: 'email', placeholder: 'example@mail.com', validators: [
+      { name: 'required' },
+      { name: 'email' }
+    ] }
+Explanation: Email field with two validators: required and email (must match email format).
+
+Key code quote 5 - Rendering the dynamic form in template:
+  <ng-container *ngIf="showDynamic">
+    <h2>Dynamic Form — интеграция CVA</h2>
+    <app-dynamic-form [config]="dynamicConfig"></app-dynamic-form>
+  </ng-container>
+Explanation: Conditionally renders the DynamicFormComponent, passing the sample config as input. This demonstrates the full integration of CVA and dynamic forms.
+
+4. How CVA and validation are integrated
+- StarRatingComponent implements the full CVA contract (writeValue, registerOnChange, registerOnTouched, setDisabledState) and the Validator interface (validate method).
+- When a user selects a star, setValue() calls onChange() to notify the parent form and onTouched() to update the touched state.
+- DynamicFormService maps FieldConfig validators to Angular Validators and attaches them to FormControls.
+- DynamicFormComponent displays error messages when control.invalid && (touched || dirty), providing visual feedback via CSS and text.
+- All controls in the dynamic form are part of a single FormGroup, allowing the form to enforce required validators and prevent submission until all required fields are valid.
+
+5. How the rating field works in the dynamic form
+- The rating field uses native radio inputs (not the CVA component) in the dynamic renderer for reliability and browser compatibility.
+- Each radio input is bound via [formControlName]="f.name" to the corresponding FormControl.
+- When a user clicks a star (radio), the form control's value updates to the numeric rating (1-5).
+- If the required validator is applied and no star is selected, the control is invalid.
+- On submit, if invalid, the component marks all controls as touched to reveal errors.
+
+6. Notes and recommendations
+- Reusability: StarRatingComponent is standalone and fully reusable. To use it in the dynamic renderer, replace the radio template with:
+  <app-star-rating [formControlName]="f.name" [required]="hasRequired(f)" [maxStars]="5"></app-star-rating>
+- Extensibility: DynamicFormService currently supports flat structures. For nested forms (FormGroup/FormArray), extend FieldConfig with a children property and implement recursive group building.
+- Validation: Custom validators can be added to mapValidators(). For example, implement a 'minDate' validator by adding a case for it and using Validators.minDate().
+- UX improvement: Consider adding async validators (e.g., checking username availability) by supporting AsyncValidatorFn in ValidatorConfig.
+
+End of updated report.
