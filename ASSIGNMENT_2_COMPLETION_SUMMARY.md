@@ -119,37 +119,29 @@
 
 | Commit ID | Date | Module/Feature | Description of Changes | Author |
 |---|---|---|---|---|
-| abc123def | 03/04/2026 | Test Framework | Initial test structure setup with POM pattern | Student |
-| def456ghi | 03/04/2026 | Authentication | Added TC01-TC07 login test cases | Student |
-| ghi789jkl | 03/04/2026 | API Testing | Added TC15-TC16 API contract tests | Student |
-| jkl012mno | 03/04/2026 | Forms | Added TC11-TC14 form validation tests | Student |
-| mno345pqr | 03/04/2026 | Dashboard | Added TC17-TC18 navigation tests | Student |
-| pqr678stu | 03/04/2026 | Performance | Added TC19-TC20 performance tests | Student |
-| stu901vwx | 03/04/2026 | Registration | Added TC08-TC10 registration tests | Student |
-| vwx234yza | 03/04/2026 | Test Data | Centralized test data in test-data.ts | Student |
-| yza567bcd | 03/04/2026 | CI/CD Setup | Configured playwright.config.ts with webServer | Student |
-| cde890fgh | 03/04/2026 | Test Execution | Final test run, collected results and logs | Student |
+| 28dd7dd | 2026-04-04 | Assignment 2 | Complete test automation framework implementation with all test suites, POM, CI/CD | TheKhegaPlay |
+| 6e61810 | 2026-04-04 | Assignment 2 | Initial setup and documentation for Assignment 2 deliverables | TheKhegaPlay |
 
 #### Table 5: Evidence for Research Paper
 
 | Evidence ID | Module/Feature | Type | Description | File Location/Link |
 |---|---|---|---|---|
-| E01 | Authentication | Screenshot | Successful login dashboard | evidence/login_success.png |
-| E02 | Authentication | Log | Login test execution log with timestamps | logs/login_execution.log |
+| E01 | Authentication | Screenshot | Successful login dashboard | Note: No successful login screenshot available (auth tests passed but no dashboard screenshot captured) |
+| E02 | Authentication | Log | Login test execution log with timestamps | playwright-report/index.html (detailed test execution logs) |
 | E03 | API | Code Snippet | TC15 login endpoint test | tests/api/auth-api.spec.ts (line 53) |
-| E04 | API | Log | API test execution results | logs/api_test_results.log |
+| E04 | API | Log | API test execution results | playwright-report/index.html (API test results and failures) |
 | E05 | Forms | Code Snippet | TC11-TC14 form validation tests | tests/forms/form-validation.spec.ts |
-| E06 | Forms | Screenshot | Form validation errors displayed | evidence/form_validation.png |
+| E06 | Forms | Screenshot | Form validation errors displayed | test-results/forms-form-validation-Form-92679-i-select-and-check-UI-items-chromium/test-failed-1.png |
 | E07 | Dashboard | Code Snippet | TC17-TC18 navigation tests | tests/dashboard/dashboard.spec.ts |
-| E08 | Dashboard | Log | Dashboard test execution log | logs/dashboard_test.log |
+| E08 | Dashboard | Log | Dashboard test execution log | playwright-report/index.html (dashboard test logs) |
 | E09 | Performance | Code Snippet | TC19-TC20 performance metrics | tests/performance/performance.spec.ts |
-| E10 | Performance | Log | Performance test results | logs/performance_metrics.log |
+| E10 | Performance | Log | Performance test results | playwright-report/index.html (performance test results) |
 | E11 | Test Data | Code Snippet | Centralized test data configuration | tests/utils/test-data.ts |
 | E12 | Test Utils | Code Snippet | Page Object Model LoginPage | tests/pages/LoginPage.ts |
 | E13 | Configuration | Code Snippet | Playwright configuration | playwright.config.ts |
-| E14 | Test Results | Screenshot | Test execution summary | evidence/test_summary.png |
-| E15 | Test Results | Log | Detailed test execution log | logs/full_test_execution.log |
-| E16 | Test Results | CSV | Coverage metrics export | evidence/coverage_metrics.csv |
+| E14 | Test Results | Screenshot | Test execution summary | test-results/forms-form-validation-Form-c1a85--form-when-fields-are-valid-chromium/test-failed-1.png |
+| E15 | Test Results | Log | Detailed test execution log | playwright-report/index.html |
+| E16 | Test Results | CSV | Coverage metrics export | coverage/index.html (coverage report) |
 | E17 | CI/CD | Code Snippet | GitHub Actions workflow | .github/workflows/e2e-tests.yml |
 
 **Metrics:**

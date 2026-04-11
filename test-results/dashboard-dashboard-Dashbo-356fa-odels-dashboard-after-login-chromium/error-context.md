@@ -6,15 +6,23 @@
 
 # Test info
 
-- Name: forms\form-validation.spec.ts >> Forms Validation (TC11-TC14) >> TC12: Should submit dynamic form when fields are valid
-- Location: tests\forms\form-validation.spec.ts:38:7
+- Name: dashboard\dashboard.spec.ts >> Dashboard Navigation (TC17-TC18) >> TC17: Should land on GAN models dashboard after login
+- Location: tests\dashboard\dashboard.spec.ts:18:7
 
 # Error details
 
 ```
-TimeoutError: page.click: Timeout 15000ms exceeded.
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('h1')
+Expected pattern: /GAN Models Dashboard/i
+Error: strict mode violation: locator('h1') resolved to 2 elements:
+    1) <h1 _ngcontent-ng-c582792440="">Loading GAN Application...</h1> aka getByRole('heading', { name: 'Loading GAN Application...' })
+    2) <h1 _ngcontent-ng-c2368853086="">🤖 GAN Models Dashboard</h1> aka getByRole('heading', { name: '🤖 GAN Models Dashboard' })
+
 Call log:
-  - waiting for locator('button:has-text("✨ Dynamic Form")')
+  - Expect "toContainText" with timeout 10000ms
+  - waiting for locator('h1')
 
 ```
 
@@ -44,7 +52,7 @@ Call log:
             - generic [ref=e25]: Measuring...
           - generic [ref=e26]:
             - generic [ref=e27]: TTFB (Time to First Byte)
-            - generic [ref=e28]: 3ms
+            - generic [ref=e28]: 5ms
             - generic [ref=e30]: ✓ Good
         - generic [ref=e31]:
           - heading "🎯 Optimization Tips" [level=4] [ref=e32]
@@ -121,82 +129,36 @@ Call log:
   2  | import { LoginPage } from '../pages/LoginPage';
   3  | import { testUrls, validUser } from '../utils/test-data';
   4  | 
-  5  | // TC11-TC14: Forms validation tests
-  6  | 
-  7  | test.describe('Forms Validation (TC11-TC14)', () => {
-  8  |   let loginPage: LoginPage;
-  9  | 
-  10 |   test.beforeEach(async ({ page }) => {
-  11 |     loginPage = new LoginPage(page);
-  12 | 
-  13 |     await loginPage.navigateToLogin(testUrls.loginUrl);
-  14 |     await loginPage.waitForLoginPage(30000);
-  15 | 
-  16 |     // login first to access dashboard and form shortcuts
-  17 |     await loginPage.fillEmail(validUser.email);
-  18 |     await loginPage.fillPassword(validUser.password);
-  19 |     await loginPage.submitForm();
-  20 | 
-  21 |     // wait for dashboard
-  22 |     await loginPage.waitForDashboard(30000);
-  23 |   });
-  24 | 
-  25 |   test('TC11: Should show validation error on dynamic form required fields', async ({ page }) => {
-  26 |     // navigate to dynamic form section
-  27 |     await page.click('button:has-text("✨ Dynamic Form")');
-  28 |     await page.waitForSelector('form.dyn-form');
-  29 | 
-  30 |     // submit empty dynamic form
-  31 |     await page.click('form.dyn-form button[type="submit"]');
-  32 | 
-  33 |     const errorLabel = await page.locator('.field.invalid .error small').first();
-  34 |     await expect(errorLabel).toBeVisible();
-  35 |     await expect(errorLabel).toContainText(/obligatro.*заполнения|required/i);
-  36 |   });
-  37 | 
-  38 |   test('TC12: Should submit dynamic form when fields are valid', async ({ page }) => {
-> 39 |     await page.click('button:has-text("✨ Dynamic Form")');
-     |                ^ TimeoutError: page.click: Timeout 15000ms exceeded.
-  40 |     await page.waitForSelector('form.dyn-form');
-  41 | 
-  42 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
-  43 |     await page.fill('input[formcontrolname="email"]', 'dynamic-test@forensics.gov');
-  44 | 
-  45 |     await page.click('form.dyn-form button[type="submit"]');
-  46 | 
-  47 |     // After successful submit, form should still exist and no errors displayed
-  48 |     await expect(page.locator('.field.invalid')).toHaveCount(0);
-  49 |   });
-  50 | 
-  51 |   test('TC13: Should display invalid email warning in dynamic form', async ({ page }) => {
-  52 |     await page.click('button:has-text("✨ Dynamic Form")');
-  53 |     await page.waitForSelector('form.dyn-form');
-  54 | 
-  55 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
-  56 |     await page.fill('input[formcontrolname="email"]', 'not-an-email');
-  57 | 
-  58 |     await page.click('form.dyn-form button[type="submit"]');
-  59 | 
-  60 |     const err = page.locator('.field.invalid').filter({ hasText: /email/i });
-  61 |     await expect(err).toHaveCount(1);
-  62 |   });
-  63 | 
-  64 |   test('TC14: Should allow multi-select and check UI items', async ({ page }) => {
-  65 |     await page.click('button:has-text("✨ Dynamic Form")');
-  66 |     await page.waitForSelector('form.dyn-form');
-  67 | 
-  68 |     // set a custom value for existing email field
-  69 |     await page.fill('input[formcontrolname="email"]', 'multiselect@forensics.gov');
-  70 |     await page.fill('input[formcontrolname="name"]', 'Multi Test');
-  71 | 
-  72 |     const selectInput = page.locator('select[formcontrolname="category"]');
-  73 |     if (await selectInput.count()) {
-  74 |       await selectInput.selectOption({ index: 1 });
-  75 |       expect(await selectInput.inputValue()).not.toBe('');
-  76 |     }
-  77 | 
-  78 |     await expect(page.locator('form.dyn-form')).toBeVisible();
-  79 |   });
-  80 | });
-  81 | 
+  5  | test.describe('Dashboard Navigation (TC17-TC18)', () => {
+  6  |   let loginPage: LoginPage;
+  7  | 
+  8  |   test.beforeEach(async ({ page }) => {
+  9  |     loginPage = new LoginPage(page);
+  10 |     await loginPage.navigateToLogin(testUrls.loginUrl);
+  11 |     await loginPage.waitForLoginPage(30000);
+  12 |     await loginPage.fillEmail(validUser.email);
+  13 |     await loginPage.fillPassword(validUser.password);
+  14 |     await loginPage.submitForm();
+  15 |     await loginPage.waitForDashboard(30000);
+  16 |   });
+  17 | 
+  18 |   test('TC17: Should land on GAN models dashboard after login', async ({ page }) => {
+  19 |     await expect(page).toHaveURL(/gan-models/);
+> 20 |     await expect(page.locator('h1')).toContainText(/GAN Models Dashboard/i);
+     |                                      ^ Error: expect(locator).toContainText(expected) failed
+  21 |   });
+  22 | 
+  23 |   test('TC18: Should logout from dashboard and return to login', async ({ page }) => {
+  24 |     const [dialog] = await Promise.all([
+  25 |       page.waitForEvent('dialog'),
+  26 |       page.click('button.logout-btn'),
+  27 |     ]);
+  28 |     await expect(dialog.message()).toContain('Are you sure you want to logout');
+  29 |     await dialog.accept();
+  30 | 
+  31 |     await expect(page).toHaveURL(/login/);
+  32 |     await expect(page.locator('h1')).toContainText(/Forensic Platform Login/i);
+  33 |   });
+  34 | });
+  35 | 
 ```

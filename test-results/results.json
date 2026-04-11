@@ -1,0 +1,2449 @@
+{
+  "config": {
+    "configFile": "B:\\GitHubRepos\\GAN-main\\playwright.config.ts",
+    "rootDir": "B:/GitHubRepos/GAN-main/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 8
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "B:/GitHubRepos/GAN-main/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 8
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "B:/GitHubRepos/GAN-main/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 8,
+    "webServer": {
+      "command": "npm run start",
+      "url": "http://localhost:4200",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "api\\auth-api.spec.ts",
+      "file": "api/auth-api.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API Authentication Endpoints (TC15-TC16)",
+          "file": "api/auth-api.spec.ts",
+          "line": 20,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC15: Should send correct request payload to login endpoint",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 502,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[200, 201, 202, 204]\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[200, 201, 202, 204]\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:84:34",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                          "column": 34,
+                          "line": 84
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 82 |\u001b[39m     \n \u001b[90m 83 |\u001b[39m     \u001b[90m// Accept 200 (OK) or 201 (Created)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 84 |\u001b[39m     expect([\u001b[35m200\u001b[39m\u001b[33m,\u001b[39m \u001b[35m201\u001b[39m\u001b[33m,\u001b[39m \u001b[35m202\u001b[39m\u001b[33m,\u001b[39m \u001b[35m204\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 85 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[TC15] ✓ Response status is successful (${statusCode})`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m     \u001b[90m// Verify request was sent correctly\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                            "column": 34,
+                            "line": 84
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[200, 201, 202, 204]\u001b[39m\n\n\u001b[0m \u001b[90m 82 |\u001b[39m     \n \u001b[90m 83 |\u001b[39m     \u001b[90m// Accept 200 (OK) or 201 (Created)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 84 |\u001b[39m     expect([\u001b[35m200\u001b[39m\u001b[33m,\u001b[39m \u001b[35m201\u001b[39m\u001b[33m,\u001b[39m \u001b[35m202\u001b[39m\u001b[33m,\u001b[39m \u001b[35m204\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 85 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[TC15] ✓ Response status is successful (${statusCode})`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 86 |\u001b[39m\n \u001b[90m 87 |\u001b[39m     \u001b[90m// Verify request was sent correctly\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:84:34\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[TC15] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC15] Login endpoint: http://localhost:4200/api/auth/login\n"
+                        },
+                        {
+                          "text": "[TC15] Payload: {\"email\":\"demo@forensics.gov\",\"password\":\"demo123\"}\n"
+                        },
+                        {
+                          "text": "[TC15] Response status: 404\n"
+                        },
+                        {
+                          "text": "[TC15] Status code: 404\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:28.753Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-88ef5-t-payload-to-login-endpoint-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-88ef5-t-payload-to-login-endpoint-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                        "column": 34,
+                        "line": 84
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-0b9a1c6c0faf4d42e323",
+              "file": "api/auth-api.spec.ts",
+              "line": 53,
+              "column": 7
+            },
+            {
+              "title": "TC16: Should receive valid auth token in response",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 44,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:120:27",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                          "column": 27,
+                          "line": 120
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 118 |\u001b[39m\n \u001b[90m 119 |\u001b[39m     \u001b[90m// Assert - Response status success\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 120 |\u001b[39m     expect(response\u001b[33m.\u001b[39mok())\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 121 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m'[TC16] ✓ Response is OK'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 122 |\u001b[39m\n \u001b[90m 123 |\u001b[39m     \u001b[90m// Parse response\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                            "column": 27,
+                            "line": 120
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n\u001b[0m \u001b[90m 118 |\u001b[39m\n \u001b[90m 119 |\u001b[39m     \u001b[90m// Assert - Response status success\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 120 |\u001b[39m     expect(response\u001b[33m.\u001b[39mok())\u001b[33m.\u001b[39mtoBe(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 121 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m'[TC16] ✓ Response is OK'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 122 |\u001b[39m\n \u001b[90m 123 |\u001b[39m     \u001b[90m// Parse response\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:120:27\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[TC16] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC16] Response status: 404\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:28.714Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-01c5d-alid-auth-token-in-response-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-01c5d-alid-auth-token-in-response-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                        "column": 27,
+                        "line": 120
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-1c3ab14c9f6a58dc4070",
+              "file": "api/auth-api.spec.ts",
+              "line": 96,
+              "column": 7
+            },
+            {
+              "title": "Extended API: Should reject invalid credentials with 401",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 45,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[401, 403, 400]\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[401, 403, 400]\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:198:29",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                          "column": 29,
+                          "line": 198
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 196 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-401] Status code: ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 197 |\u001b[39m     \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 198 |\u001b[39m     expect([\u001b[35m401\u001b[39m\u001b[33m,\u001b[39m \u001b[35m403\u001b[39m\u001b[33m,\u001b[39m \u001b[35m400\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 199 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-401] ✓ Rejected with status ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 200 |\u001b[39m\n \u001b[90m 201 |\u001b[39m     \u001b[90m// Try to parse error response\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                            "column": 29,
+                            "line": 198
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[401, 403, 400]\u001b[39m\n\n\u001b[0m \u001b[90m 196 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-401] Status code: ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 197 |\u001b[39m     \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 198 |\u001b[39m     expect([\u001b[35m401\u001b[39m\u001b[33m,\u001b[39m \u001b[35m403\u001b[39m\u001b[33m,\u001b[39m \u001b[35m400\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 199 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-401] ✓ Rejected with status ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 200 |\u001b[39m\n \u001b[90m 201 |\u001b[39m     \u001b[90m// Try to parse error response\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:198:29\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[Extended-401] Starting test...\n"
+                        },
+                        {
+                          "text": "[Extended-401] Response status: 404\n"
+                        },
+                        {
+                          "text": "[Extended-401] Status code: 404\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:29.368Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-d71cb-nvalid-credentials-with-401-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-d71cb-nvalid-credentials-with-401-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                        "column": 29,
+                        "line": 198
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-f701e2c090faab94e589",
+              "file": "api/auth-api.spec.ts",
+              "line": 171,
+              "column": 7
+            },
+            {
+              "title": "Extended API: Should return 400 for missing email",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 44,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[400, 422, 401]\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[400, 422, 401]\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:247:29",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                          "column": 29,
+                          "line": 247
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 245 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-400] Status code: ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 246 |\u001b[39m     \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 247 |\u001b[39m     expect([\u001b[35m400\u001b[39m\u001b[33m,\u001b[39m \u001b[35m422\u001b[39m\u001b[33m,\u001b[39m \u001b[35m401\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 248 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-400] ✓ Request rejected with status ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 249 |\u001b[39m\n \u001b[90m 250 |\u001b[39m     \u001b[90m// Verify error mentions missing field\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                            "column": 29,
+                            "line": 247
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m404\u001b[39m\nReceived array: \u001b[31m[400, 422, 401]\u001b[39m\n\n\u001b[0m \u001b[90m 245 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-400] Status code: ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 246 |\u001b[39m     \n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 247 |\u001b[39m     expect([\u001b[35m400\u001b[39m\u001b[33m,\u001b[39m \u001b[35m422\u001b[39m\u001b[33m,\u001b[39m \u001b[35m401\u001b[39m])\u001b[33m.\u001b[39mtoContain(statusCode)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 248 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m`[Extended-400] ✓ Request rejected with status ${statusCode}`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 249 |\u001b[39m\n \u001b[90m 250 |\u001b[39m     \u001b[90m// Verify error mentions missing field\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:247:29\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[Extended-400] Starting test...\n"
+                        },
+                        {
+                          "text": "[Extended-400] Response status: 404\n"
+                        },
+                        {
+                          "text": "[Extended-400] Status code: 404\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:29.344Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-85abf-eturn-400-for-missing-email-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-85abf-eturn-400-for-missing-email-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                        "column": 29,
+                        "line": 247
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-b463a7e2e997f1b2f7a5",
+              "file": "api/auth-api.spec.ts",
+              "line": 220,
+              "column": 7
+            },
+            {
+              "title": "Extended API: Should return JSON content type",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 43,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"json\"\u001b[39m\nReceived string:    \u001b[31m\"text/html; charset=utf-8\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"json\"\u001b[39m\nReceived string:    \u001b[31m\"text/html; charset=utf-8\"\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:295:39",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                          "column": 39,
+                          "line": 295
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 293 |\u001b[39m     \n \u001b[90m 294 |\u001b[39m     \u001b[90m// Should be JSON (handle both lowercase and case variations)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 295 |\u001b[39m     expect(contentType\u001b[33m.\u001b[39mtoLowerCase())\u001b[33m.\u001b[39mtoContain(\u001b[32m'json'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 296 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m'[Extended-Headers] ✓ Response is JSON format'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 297 |\u001b[39m\n \u001b[90m 298 |\u001b[39m     \u001b[90m// Verify no sensitive data in headers\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                            "column": 39,
+                            "line": 295
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"json\"\u001b[39m\nReceived string:    \u001b[31m\"text/html; charset=utf-8\"\u001b[39m\n\n\u001b[0m \u001b[90m 293 |\u001b[39m     \n \u001b[90m 294 |\u001b[39m     \u001b[90m// Should be JSON (handle both lowercase and case variations)\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 295 |\u001b[39m     expect(contentType\u001b[33m.\u001b[39mtoLowerCase())\u001b[33m.\u001b[39mtoContain(\u001b[32m'json'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 296 |\u001b[39m     console\u001b[33m.\u001b[39mlog(\u001b[32m'[Extended-Headers] ✓ Response is JSON format'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 297 |\u001b[39m\n \u001b[90m 298 |\u001b[39m     \u001b[90m// Verify no sensitive data in headers\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts:295:39\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[Extended-Headers] Starting test...\n"
+                        },
+                        {
+                          "text": "[Extended-Headers] Content-Type: text/html; charset=utf-8\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:28.731Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-5a8e4-ld-return-JSON-content-type-chromium\\error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\api-auth-api-API-Authentic-5a8e4-ld-return-JSON-content-type-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\api\\auth-api.spec.ts",
+                        "column": 39,
+                        "line": 295
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-56c4c308512e698344ad",
+              "file": "api/auth-api.spec.ts",
+              "line": 269,
+              "column": 7
+            },
+            {
+              "title": "Debug API: Verify API backend is accessible",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 36,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeAll] Creating API context with baseURL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[beforeAll] API context created\n"
+                        },
+                        {
+                          "text": "[Debug] Testing API connectivity...\n"
+                        },
+                        {
+                          "text": "[Debug] API Base URL: http://localhost:4200/api\n"
+                        },
+                        {
+                          "text": "[Debug] Login Endpoint: http://localhost:4200/api/auth/login\n"
+                        },
+                        {
+                          "text": "[Debug] ✓ API backend is accessible (status: 404)\n"
+                        },
+                        {
+                          "text": "[Debug] Response headers: {\"x-powered-by\":\"Express\",\"access-control-allow-origin\":\"*\",\"content-security-policy\":\"default-src 'none'\",\"x-content-type-options\":\"nosniff\",\"content-type\":\"text/html; charset=utf-8\",\"content-length\":\"150\",\"date\":\"Fri, 10 Apr 2026 19:28:29 GMT\",\"connection\":\"keep-alive\",\"keep-alive\":\"timeout=5\"}\n"
+                        },
+                        {
+                          "text": "[afterAll] Disposing API context\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:29.366Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "811441bc76ae2ee42483-7ac357f22fa3e9265ad1",
+              "file": "api/auth-api.spec.ts",
+              "line": 308,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth\\login.spec.ts",
+      "file": "auth/login.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication - Login Functionality (TC01-TC07)",
+          "file": "auth/login.spec.ts",
+          "line": 21,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC01: Should successfully login with valid credentials",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 3261,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"Forensic Investigator\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[39m\n\u001b[31m  Loading GAN Application...🤖 GAN Models DashboardLogout⚡ Web Vitals Performance MetricsLCP (Largest Contentful Paint)CLS (Cumulative Layout Shift)FCP (First Contentful Paint)TTFB (Time to First Byte)🎯 Optimization Tips✓ Server-Side Rendering (SSR) enabled for faster initial page load✓ Image lazy loading activated✓ Code splitting and lazy component loading configured✓ Event coalescing enabled for better change detection✓ HTTP caching and compression configured✓ Web Vitals monitoring active··\u001b[39m\n\u001b[31m\"\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"Forensic Investigator\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[39m\n\u001b[31m  Loading GAN Application...🤖 GAN Models DashboardLogout⚡ Web Vitals Performance MetricsLCP (Largest Contentful Paint)CLS (Cumulative Layout Shift)FCP (First Contentful Paint)TTFB (Time to First Byte)🎯 Optimization Tips✓ Server-Side Rendering (SSR) enabled for faster initial page load✓ Image lazy loading activated✓ Code splitting and lazy component loading configured✓ Event coalescing enabled for better change detection✓ HTTP caching and compression configured✓ Web Vitals monitoring active··\u001b[39m\n\u001b[31m\"\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:112:28\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:91:5",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts",
+                          "column": 28,
+                          "line": 112
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 110 |\u001b[39m           \u001b[36mconst\u001b[39m pageText \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mtextContent(\u001b[32m'body'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 111 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'GAN Models'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'Forensic Investigator'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m         }\n \u001b[90m 114 |\u001b[39m       }\n \u001b[90m 115 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts",
+                            "column": 28,
+                            "line": 112
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"Forensic Investigator\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[39m\n\u001b[31m  Loading GAN Application...🤖 GAN Models DashboardLogout⚡ Web Vitals Performance MetricsLCP (Largest Contentful Paint)CLS (Cumulative Layout Shift)FCP (First Contentful Paint)TTFB (Time to First Byte)🎯 Optimization Tips✓ Server-Side Rendering (SSR) enabled for faster initial page load✓ Image lazy loading activated✓ Code splitting and lazy component loading configured✓ Event coalescing enabled for better change detection✓ HTTP caching and compression configured✓ Web Vitals monitoring active··\u001b[39m\n\u001b[31m\"\u001b[39m\n\n\u001b[0m \u001b[90m 110 |\u001b[39m           \u001b[36mconst\u001b[39m pageText \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mtextContent(\u001b[32m'body'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 111 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'GAN Models'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'Forensic Investigator'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m         }\n \u001b[90m 114 |\u001b[39m       }\n \u001b[90m 115 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:112:28\u001b[22m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:91:5\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC01] Starting test...\n"
+                        },
+                        {
+                          "text": "Waiting for email input to be visible...\n"
+                        },
+                        {
+                          "text": "✓ Email input visible\n"
+                        },
+                        {
+                          "text": "[TC01] Form ready\n"
+                        },
+                        {
+                          "text": "[TC01] Email filled\n"
+                        },
+                        {
+                          "text": "[TC01] Password filled\n"
+                        },
+                        {
+                          "text": "[TC01] Form submitted\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        },
+                        {
+                          "text": "[TC01] Dashboard loaded\n"
+                        },
+                        {
+                          "text": "[TC01] URL contains /gan-models\n"
+                        },
+                        {
+                          "text": "[TC01] No auth cookie found, checking localStorage for token...\n"
+                        }
+                      ],
+                      "stderr": [
+                        {
+                          "text": "[TC01] No auth token found in cookies or localStorage. Verifying dashboard UI as fallback.\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Verify login form is ready",
+                          "duration": 26
+                        },
+                        {
+                          "title": "Fill credentials and login",
+                          "duration": 115
+                        },
+                        {
+                          "title": "Verify dashboard navigation",
+                          "duration": 4
+                        },
+                        {
+                          "title": "Verify authentication token or dashboard state",
+                          "duration": 18,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"Forensic Investigator\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[39m\n\u001b[31m  Loading GAN Application...🤖 GAN Models DashboardLogout⚡ Web Vitals Performance MetricsLCP (Largest Contentful Paint)CLS (Cumulative Layout Shift)FCP (First Contentful Paint)TTFB (Time to First Byte)🎯 Optimization Tips✓ Server-Side Rendering (SSR) enabled for faster initial page load✓ Image lazy loading activated✓ Code splitting and lazy component loading configured✓ Event coalescing enabled for better change detection✓ HTTP caching and compression configured✓ Web Vitals monitoring active··\u001b[39m\n\u001b[31m\"\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected substring: \u001b[32m\"Forensic Investigator\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[39m\n\u001b[31m  Loading GAN Application...🤖 GAN Models DashboardLogout⚡ Web Vitals Performance MetricsLCP (Largest Contentful Paint)CLS (Cumulative Layout Shift)FCP (First Contentful Paint)TTFB (Time to First Byte)🎯 Optimization Tips✓ Server-Side Rendering (SSR) enabled for faster initial page load✓ Image lazy loading activated✓ Code splitting and lazy component loading configured✓ Event coalescing enabled for better change detection✓ HTTP caching and compression configured✓ Web Vitals monitoring active··\u001b[39m\n\u001b[31m\"\u001b[39m\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:112:28\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts:91:5",
+                            "location": {
+                              "file": "B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts",
+                              "column": 28,
+                              "line": 112
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 110 |\u001b[39m           \u001b[36mconst\u001b[39m pageText \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mtextContent(\u001b[32m'body'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 111 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'GAN Models'\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 112 |\u001b[39m           expect(pageText)\u001b[33m.\u001b[39mtoContain(\u001b[32m'Forensic Investigator'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 113 |\u001b[39m         }\n \u001b[90m 114 |\u001b[39m       }\n \u001b[90m 115 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m"
+                          }
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:29.366Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-login-Authentication--164fb-ogin-with-valid-credentials-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-login-Authentication--164fb-ogin-with-valid-credentials-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-login-Authentication--164fb-ogin-with-valid-credentials-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\auth\\login.spec.ts",
+                        "column": 28,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-7956d79f1cae55b1ef95",
+              "file": "auth/login.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "TC02: Should show error for invalid password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
+                      "status": "passed",
+                      "duration": 3759,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC02] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC02] Email filled\n"
+                        },
+                        {
+                          "text": "[TC02] Wrong password filled\n"
+                        },
+                        {
+                          "text": "[TC02] Form submitted\n"
+                        },
+                        {
+                          "text": "[TC02] Error message: Invalid email or password\n"
+                        },
+                        {
+                          "text": "[TC02] URL: http://localhost:4200/login\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Attempt login with wrong password",
+                          "duration": 2077
+                        },
+                        {
+                          "title": "Verify error message is displayed",
+                          "duration": 48
+                        },
+                        {
+                          "title": "Verify still on login page",
+                          "duration": 1
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:29.085Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-605a7caf6a38e537773c",
+              "file": "auth/login.spec.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "TC03: Should show error for non-existent email (no enumeration)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 3902,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC03] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC03] Non-existent email filled\n"
+                        },
+                        {
+                          "text": "[TC03] Password filled\n"
+                        },
+                        {
+                          "text": "[TC03] Form submitted\n"
+                        },
+                        {
+                          "text": "[TC03] Error message: Invalid email or password\n"
+                        },
+                        {
+                          "text": "[TC03] Security check passed: no user enumeration\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Attempt login with non-existent email",
+                          "duration": 2087
+                        },
+                        {
+                          "title": "Verify error message (generic, no enumeration)",
+                          "duration": 30
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:30.170Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-9c8be308952019866589",
+              "file": "auth/login.spec.ts",
+              "line": 176,
+              "column": 7
+            },
+            {
+              "title": "TC04: Should show validation error for empty email",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 3395,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC04] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC04] Password filled\n"
+                        },
+                        {
+                          "text": "[TC04] Form submitted with empty email\n"
+                        },
+                        {
+                          "text": "[TC04] Error message: Email is required\n"
+                        },
+                        {
+                          "text": "[TC04] Still on login page\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Submit form with empty email",
+                          "duration": 1065
+                        },
+                        {
+                          "title": "Verify validation error",
+                          "duration": 42
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:30.837Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-11acbea69b10a15335b4",
+              "file": "auth/login.spec.ts",
+              "line": 219,
+              "column": 7
+            },
+            {
+              "title": "TC05: Should show validation error for empty password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3623,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC05] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC05] Email filled\n"
+                        },
+                        {
+                          "text": "[TC05] Form submitted with empty password\n"
+                        },
+                        {
+                          "text": "[TC05] Error message: Password is required\n"
+                        },
+                        {
+                          "text": "[TC05] Still on login page\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Submit form with empty password",
+                          "duration": 1076
+                        },
+                        {
+                          "title": "Verify validation error",
+                          "duration": 18
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:30.272Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-9f81d795fab10cbccb1d",
+              "file": "auth/login.spec.ts",
+              "line": 256,
+              "column": 7
+            },
+            {
+              "title": "TC06: Should show error for invalid email format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 3444,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC06] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC06] Invalid email format filled\n"
+                        },
+                        {
+                          "text": "[TC06] Password filled\n"
+                        },
+                        {
+                          "text": "[TC06] Form submitted\n"
+                        },
+                        {
+                          "text": "[TC06] Validation message: Please include an '@' in the email address. 'notanemail' is missing an '@'.\n"
+                        },
+                        {
+                          "text": "[TC06] Error visible: true\n"
+                        },
+                        {
+                          "text": "[TC06] Error message: Please enter a valid email\n"
+                        },
+                        {
+                          "text": "[TC06] Still on login page\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Submit form with invalid email format",
+                          "duration": 1087
+                        },
+                        {
+                          "title": "Verify format validation error",
+                          "duration": 203
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:30.351Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-30ecdf580bf2260e0e48",
+              "file": "auth/login.spec.ts",
+              "line": 292,
+              "column": 7
+            },
+            {
+              "title": "TC07: Should reject short password",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 3391,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[TC07] Starting test...\n"
+                        },
+                        {
+                          "text": "[TC07] Email filled\n"
+                        },
+                        {
+                          "text": "[TC07] Short password filled (7 chars)\n"
+                        },
+                        {
+                          "text": "[TC07] Form submitted\n"
+                        },
+                        {
+                          "text": "[TC07] Error message: Invalid email or password\n"
+                        },
+                        {
+                          "text": "[TC07] Still on login page\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Submit form with short password",
+                          "duration": 1083
+                        },
+                        {
+                          "title": "Verify password validation error",
+                          "duration": 62
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:29.527Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-efc9a8d0df4678034358",
+              "file": "auth/login.spec.ts",
+              "line": 337,
+              "column": 7
+            },
+            {
+              "title": "Extended: Should handle multiple failed attempts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 6998,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[beforeEach] Starting test, navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Waiting for login page to be ready...\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "[beforeEach] Verifying email input is visible...\n"
+                        },
+                        {
+                          "text": "[beforeEach] Current URL: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "[beforeEach] Setup complete, test starting...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Starting multiple attempts test...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 1: Starting...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 1: Error shown\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 2: Starting...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 2: Error shown\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 3: Starting...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Attempt 3: Error shown\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Final attempt: Starting with correct credentials...\n"
+                        },
+                        {
+                          "text": "[EXTENDED] Waiting for dashboard...\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        },
+                        {
+                          "text": "[EXTENDED] ✓ Login successful on final attempt\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [
+                        {
+                          "title": "Failed attempt 1 of 3",
+                          "duration": 1723
+                        },
+                        {
+                          "title": "Failed attempt 2 of 3",
+                          "duration": 1766
+                        },
+                        {
+                          "title": "Failed attempt 3 of 3",
+                          "duration": 1708
+                        },
+                        {
+                          "title": "Final attempt with correct credentials",
+                          "duration": 212
+                        }
+                      ],
+                      "startTime": "2026-04-10T19:28:30.378Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "231ca1f0f4db3e4958c3-37e72819df5e79d38abb",
+              "file": "auth/login.spec.ts",
+              "line": 377,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth\\register.spec.ts",
+      "file": "auth/register.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Registration API - TC08-TC10",
+          "file": "auth/register.spec.ts",
+          "line": 9,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC08: Should register a new user",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 323,
+                      "error": {
+                        "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 93\u001b[22m\n",
+                        "stack": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 93\u001b[22m\n\n    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:13:36",
+                        "location": {
+                          "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                          "column": 4000,
+                          "line": 1
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                            "column": 4000,
+                            "line": 1
+                          },
+                          "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 93\u001b[22m\n\n\u001b[2m    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\u001b[22m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:13:36\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.063Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-register-Registration-99399--Should-register-a-new-user-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                        "column": 4000,
+                        "line": 1
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7a2e1e1ccab58a85dc6a-12b382475ba2baa372b1",
+              "file": "auth/register.spec.ts",
+              "line": 10,
+              "column": 7
+            },
+            {
+              "title": "TC09: Should fail duplicate registration with 409",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 343,
+                      "error": {
+                        "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 80\u001b[22m\n",
+                        "stack": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 80\u001b[22m\n\n    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:32:36",
+                        "location": {
+                          "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                          "column": 4000,
+                          "line": 1
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                            "column": 4000,
+                            "line": 1
+                          },
+                          "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 80\u001b[22m\n\n\u001b[2m    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\u001b[22m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:32:36\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.097Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-register-Registration-d885c-icate-registration-with-409-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                        "column": 4000,
+                        "line": 1
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7a2e1e1ccab58a85dc6a-99420c730cdd43e7161b",
+              "file": "auth/register.spec.ts",
+              "line": 29,
+              "column": 7
+            },
+            {
+              "title": "TC10: Should reject missing fields with 400",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 375,
+                      "error": {
+                        "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 52\u001b[22m\n",
+                        "stack": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 52\u001b[22m\n\n    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\n    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:47:36",
+                        "location": {
+                          "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                          "column": 4000,
+                          "line": 1
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                            "column": 4000,
+                            "line": 1
+                          },
+                          "message": "Error: apiRequestContext.post: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → POST http://localhost:4000/api/auth/register\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - content-type: application/json\u001b[22m\n\u001b[2m    - content-length: 52\u001b[22m\n\n\u001b[2m    at apiRequestContext.post: connect ECONNREFUSED ::1:4000\u001b[22m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\auth\\register.spec.ts:47:36\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:43.636Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\auth-register-Registration-f34a4-ect-missing-fields-with-400-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "apiRequestContext.post: connect ECONNREFUSED :",
+                        "column": 4000,
+                        "line": 1
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7a2e1e1ccab58a85dc6a-cb4f5c5ab169e6ed87aa",
+              "file": "auth/register.spec.ts",
+              "line": 46,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dashboard\\dashboard.spec.ts",
+      "file": "dashboard/dashboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Dashboard Navigation (TC17-TC18)",
+          "file": "dashboard/dashboard.spec.ts",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC17: Should land on GAN models dashboard after login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "failed",
+                      "duration": 1467,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1')\nExpected pattern: \u001b[32m/GAN Models Dashboard/i\u001b[39m\nError: strict mode violation: locator('h1') resolved to 2 elements:\n    1) <h1 _ngcontent-ng-c582792440=\"\">Loading GAN Application...</h1> aka getByRole('heading', { name: 'Loading GAN Application...' })\n    2) <h1 _ngcontent-ng-c2368853086=\"\">🤖 GAN Models Dashboard</h1> aka getByRole('heading', { name: '🤖 GAN Models Dashboard' })\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1')\u001b[22m\n",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1')\nExpected pattern: \u001b[32m/GAN Models Dashboard/i\u001b[39m\nError: strict mode violation: locator('h1') resolved to 2 elements:\n    1) <h1 _ngcontent-ng-c582792440=\"\">Loading GAN Application...</h1> aka getByRole('heading', { name: 'Loading GAN Application...' })\n    2) <h1 _ngcontent-ng-c2368853086=\"\">🤖 GAN Models Dashboard</h1> aka getByRole('heading', { name: '🤖 GAN Models Dashboard' })\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1')\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts:20:38",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                          "column": 38,
+                          "line": 20
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 18 |\u001b[39m   test(\u001b[32m'TC17: Should land on GAN models dashboard after login'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/gan-models/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[35m/GAN Models Dashboard/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m\n \u001b[90m 23 |\u001b[39m   test(\u001b[32m'TC18: Should logout from dashboard and return to login'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                            "column": 38,
+                            "line": 20
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('h1')\nExpected pattern: \u001b[32m/GAN Models Dashboard/i\u001b[39m\nError: strict mode violation: locator('h1') resolved to 2 elements:\n    1) <h1 _ngcontent-ng-c582792440=\"\">Loading GAN Application...</h1> aka getByRole('heading', { name: 'Loading GAN Application...' })\n    2) <h1 _ngcontent-ng-c2368853086=\"\">🤖 GAN Models Dashboard</h1> aka getByRole('heading', { name: '🤖 GAN Models Dashboard' })\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('h1')\u001b[22m\n\n\n\u001b[0m \u001b[90m 18 |\u001b[39m   test(\u001b[32m'TC17: Should land on GAN models dashboard after login'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 19 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page)\u001b[33m.\u001b[39mtoHaveURL(\u001b[35m/gan-models/\u001b[39m)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 |\u001b[39m     \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'h1'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[35m/GAN Models Dashboard/i\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 22 |\u001b[39m\n \u001b[90m 23 |\u001b[39m   test(\u001b[32m'TC18: Should logout from dashboard and return to login'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts:20:38\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.121Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\dashboard-dashboard-Dashbo-356fa-odels-dashboard-after-login-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\dashboard-dashboard-Dashbo-356fa-odels-dashboard-after-login-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\dashboard-dashboard-Dashbo-356fa-odels-dashboard-after-login-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                        "column": 38,
+                        "line": 20
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "747340cde928aa6c3216-fdeb6e3474797887f343",
+              "file": "dashboard/dashboard.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "TC18: Should logout from dashboard and return to login",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 27160,
+                      "error": {
+                        "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.logout-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"logout-btn\" _ngcontent-ng-c2368853086=\"\">Logout</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n",
+                        "stack": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.logout-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"logout-btn\" _ngcontent-ng-c2368853086=\"\">Logout</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts:26:12",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                          "column": 12,
+                          "line": 26
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 24 |\u001b[39m     \u001b[36mconst\u001b[39m [dialog] \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m.\u001b[39mall([\n \u001b[90m 25 |\u001b[39m       page\u001b[33m.\u001b[39mwaitForEvent(\u001b[32m'dialog'\u001b[39m)\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       page\u001b[33m.\u001b[39mclick(\u001b[32m'button.logout-btn'\u001b[39m)\u001b[33m,\u001b[39m\n \u001b[90m    |\u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m     ])\u001b[33m;\u001b[39m\n \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoContain(\u001b[32m'Are you sure you want to logout'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                            "column": 12,
+                            "line": 26
+                          },
+                          "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button.logout-btn')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"logout-btn\" _ngcontent-ng-c2368853086=\"\">Logout</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\n\n\u001b[0m \u001b[90m 24 |\u001b[39m     \u001b[36mconst\u001b[39m [dialog] \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m \u001b[33mPromise\u001b[39m\u001b[33m.\u001b[39mall([\n \u001b[90m 25 |\u001b[39m       page\u001b[33m.\u001b[39mwaitForEvent(\u001b[32m'dialog'\u001b[39m)\u001b[33m,\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 |\u001b[39m       page\u001b[33m.\u001b[39mclick(\u001b[32m'button.logout-btn'\u001b[39m)\u001b[33m,\u001b[39m\n \u001b[90m    |\u001b[39m            \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 |\u001b[39m     ])\u001b[33m;\u001b[39m\n \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m expect(dialog\u001b[33m.\u001b[39mmessage())\u001b[33m.\u001b[39mtoContain(\u001b[32m'Are you sure you want to logout'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m     \u001b[36mawait\u001b[39m dialog\u001b[33m.\u001b[39maccept()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts:26:12\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.284Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\dashboard-dashboard-Dashbo-2cc57-shboard-and-return-to-login-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\dashboard-dashboard-Dashbo-2cc57-shboard-and-return-to-login-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\dashboard\\dashboard.spec.ts",
+                        "column": 12,
+                        "line": 26
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "747340cde928aa6c3216-d4bffc92b470629150a2",
+              "file": "dashboard/dashboard.spec.ts",
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "forms\\form-validation.spec.ts",
+      "file": "forms/form-validation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Forms Validation (TC11-TC14)",
+          "file": "forms/form-validation.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC11: Should show validation error on dynamic form required fields",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
+                      "status": "failed",
+                      "duration": 17091,
+                      "error": {
+                        "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n",
+                        "stack": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:27:16",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                          "column": 16,
+                          "line": 27
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 25 |\u001b[39m   test(\u001b[32m'TC11: Should show validation error on dynamic form required fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 26 |\u001b[39m     \u001b[90m// navigate to dynamic form section\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[90m// submit empty dynamic form\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                            "column": 16,
+                            "line": 27
+                          },
+                          "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n\n\u001b[0m \u001b[90m 25 |\u001b[39m   test(\u001b[32m'TC11: Should show validation error on dynamic form required fields'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n \u001b[90m 26 |\u001b[39m     \u001b[90m// navigate to dynamic form section\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 29 |\u001b[39m\n \u001b[90m 30 |\u001b[39m     \u001b[90m// submit empty dynamic form\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:27:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.460Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-6b731-ynamic-form-required-fields-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-6b731-ynamic-form-required-fields-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-6b731-ynamic-form-required-fields-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                        "column": 16,
+                        "line": 27
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8e7ee91dfe50b52921f1-0d8a0a17813f12fd1b03",
+              "file": "forms/form-validation.spec.ts",
+              "line": 25,
+              "column": 7
+            },
+            {
+              "title": "TC12: Should submit dynamic form when fields are valid",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 5,
+                      "status": "failed",
+                      "duration": 17083,
+                      "error": {
+                        "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n",
+                        "stack": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:39:16",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                          "column": 16,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 37 |\u001b[39m\n \u001b[90m 38 |\u001b[39m   test(\u001b[32m'TC12: Should submit dynamic form when fields are valid'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 39 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 41 |\u001b[39m\n \u001b[90m 42 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[formcontrolname=\"name\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Automation User'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                            "column": 16,
+                            "line": 39
+                          },
+                          "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n\n\u001b[0m \u001b[90m 37 |\u001b[39m\n \u001b[90m 38 |\u001b[39m   test(\u001b[32m'TC12: Should submit dynamic form when fields are valid'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 39 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 40 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 41 |\u001b[39m\n \u001b[90m 42 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[formcontrolname=\"name\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Automation User'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:39:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:43.926Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-c1a85--form-when-fields-are-valid-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-c1a85--form-when-fields-are-valid-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-c1a85--form-when-fields-are-valid-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                        "column": 16,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8e7ee91dfe50b52921f1-d3574c1ced9cb165577c",
+              "file": "forms/form-validation.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "TC13: Should display invalid email warning in dynamic form",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 17046,
+                      "error": {
+                        "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n",
+                        "stack": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:52:16",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                          "column": 16,
+                          "line": 52
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 50 |\u001b[39m\n \u001b[90m 51 |\u001b[39m   test(\u001b[32m'TC13: Should display invalid email warning in dynamic form'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 52 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 53 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 54 |\u001b[39m\n \u001b[90m 55 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[formcontrolname=\"name\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Automation User'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                            "column": 16,
+                            "line": 52
+                          },
+                          "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n\n\u001b[0m \u001b[90m 50 |\u001b[39m\n \u001b[90m 51 |\u001b[39m   test(\u001b[32m'TC13: Should display invalid email warning in dynamic form'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 52 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 53 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 54 |\u001b[39m\n \u001b[90m 55 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mfill(\u001b[32m'input[formcontrolname=\"name\"]'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'Automation User'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:52:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:44.002Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-d370f-ail-warning-in-dynamic-form-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-d370f-ail-warning-in-dynamic-form-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-d370f-ail-warning-in-dynamic-form-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                        "column": 16,
+                        "line": 52
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8e7ee91dfe50b52921f1-1b6e5ab4b8f57b10a9c4",
+              "file": "forms/form-validation.spec.ts",
+              "line": 51,
+              "column": 7
+            },
+            {
+              "title": "TC14: Should allow multi-select and check UI items",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 4,
+                      "status": "failed",
+                      "duration": 17153,
+                      "error": {
+                        "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n",
+                        "stack": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:65:16",
+                        "location": {
+                          "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                          "column": 16,
+                          "line": 65
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m   test(\u001b[32m'TC14: Should allow multi-select and check UI items'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 67 |\u001b[39m\n \u001b[90m 68 |\u001b[39m     \u001b[90m// set a custom value for existing email field\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                            "column": 16,
+                            "line": 65
+                          },
+                          "message": "TimeoutError: page.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"✨ Dynamic Form\")')\u001b[22m\n\n\n\u001b[0m \u001b[90m 63 |\u001b[39m\n \u001b[90m 64 |\u001b[39m   test(\u001b[32m'TC14: Should allow multi-select and check UI items'\u001b[39m\u001b[33m,\u001b[39m \u001b[36masync\u001b[39m ({ page }) \u001b[33m=>\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 65 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mclick(\u001b[32m'button:has-text(\"✨ Dynamic Form\")'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 66 |\u001b[39m     \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForSelector(\u001b[32m'form.dyn-form'\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 67 |\u001b[39m\n \u001b[90m 68 |\u001b[39m     \u001b[90m// set a custom value for existing email field\u001b[39m\u001b[0m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts:65:16\u001b[22m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Navigating to: http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "✓ Navigated to http://localhost:4200/login\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for login page to load...\n"
+                        },
+                        {
+                          "text": "✓ Login form found\n"
+                        },
+                        {
+                          "text": "Waiting for dashboard navigation...\n"
+                        },
+                        {
+                          "text": "✓ Dashboard loaded\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:42.550Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-92679-i-select-and-check-UI-items-chromium\\test-failed-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-92679-i-select-and-check-UI-items-chromium\\video.webm"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\forms-form-validation-Form-92679-i-select-and-check-UI-items-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "B:\\GitHubRepos\\GAN-main\\tests\\forms\\form-validation.spec.ts",
+                        "column": 16,
+                        "line": 65
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8e7ee91dfe50b52921f1-76fd22aa40dec10f0236",
+              "file": "forms/form-validation.spec.ts",
+              "line": 64,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "performance\\performance.spec.ts",
+      "file": "performance/performance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Performance Tests (TC19-TC20)",
+          "file": "performance/performance.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC19: Should load login page under 3000ms",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 996,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[TC19] login load duration: 607ms\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:44.706Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0418d4e48bf14d23f495-d3c46a0ae8fd511e31f6",
+              "file": "performance/performance.spec.ts",
+              "line": 5,
+              "column": 7
+            },
+            {
+              "title": "TC20: Should return web-vitals from API in <2000ms",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 6,
+                      "status": "failed",
+                      "duration": 342,
+                      "error": {
+                        "message": "Error: apiRequestContext.get: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → GET http://localhost:4000/api/metrics/web-vitals\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n",
+                        "stack": "Error: apiRequestContext.get: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → GET http://localhost:4000/api/metrics/web-vitals\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n    at apiRequestContext.get: connect ECONNREFUSED ::1:4000\n    at B:\\GitHubRepos\\GAN-main\\tests\\performance\\performance.spec.ts:18:36",
+                        "location": {
+                          "file": "apiRequestContext.get: connect ECONNREFUSED :",
+                          "column": 4000,
+                          "line": 1
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "apiRequestContext.get: connect ECONNREFUSED :",
+                            "column": 4000,
+                            "line": 1
+                          },
+                          "message": "Error: apiRequestContext.get: connect ECONNREFUSED ::1:4000\nCall log:\n\u001b[2m  - → GET http://localhost:4000/api/metrics/web-vitals\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.7727.15 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n\u001b[2m    at apiRequestContext.get: connect ECONNREFUSED ::1:4000\u001b[22m\n\u001b[2m    at B:\\GitHubRepos\\GAN-main\\tests\\performance\\performance.spec.ts:18:36\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-10T19:28:45.014Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "B:\\GitHubRepos\\GAN-main\\test-results\\performance-performance-Pe-5229b-b-vitals-from-API-in-2000ms-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "apiRequestContext.get: connect ECONNREFUSED :",
+                        "column": 4000,
+                        "line": 1
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0418d4e48bf14d23f495-882e1da038ea1d6b7ceb",
+              "file": "performance/performance.spec.ts",
+              "line": 14,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-10T19:28:16.727Z",
+    "duration": 52996.581,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 16,
+    "flaky": 0
+  }
+}

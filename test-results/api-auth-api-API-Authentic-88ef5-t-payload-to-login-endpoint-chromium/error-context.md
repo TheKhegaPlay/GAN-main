@@ -43,7 +43,7 @@ Received array: [200, 201, 202, 204]
   20  | test.describe('API Authentication Endpoints (TC15-TC16)', () => {
   21  |   let apiContext: APIRequestContext;
   22  |   
-  23  |   // Use environment-based API URL (compatible with real backend at 4200/api or mock at 3001)
+  23  |   // Use environment-based API URL
   24  |   const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4200/api';
   25  |   const LOGIN_ENDPOINT = `${API_BASE_URL}${apiEndpoints.login}`;
   26  |   

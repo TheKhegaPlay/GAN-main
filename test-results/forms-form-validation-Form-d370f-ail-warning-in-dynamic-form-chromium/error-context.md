@@ -7,14 +7,14 @@
 # Test info
 
 - Name: forms\form-validation.spec.ts >> Forms Validation (TC11-TC14) >> TC13: Should display invalid email warning in dynamic form
-- Location: tests\forms\form-validation.spec.ts:55:7
+- Location: tests\forms\form-validation.spec.ts:51:7
 
 # Error details
 
 ```
-TimeoutError: page.fill: Timeout 15000ms exceeded.
+TimeoutError: page.click: Timeout 15000ms exceeded.
 Call log:
-  - waiting for locator('input[formcontrolname="name"]')
+  - waiting for locator('button:has-text("✨ Dynamic Form")')
 
 ```
 
@@ -44,7 +44,7 @@ Call log:
             - generic [ref=e25]: Measuring...
           - generic [ref=e26]:
             - generic [ref=e27]: TTFB (Time to First Byte)
-            - generic [ref=e28]: 6ms
+            - generic [ref=e28]: 4ms
             - generic [ref=e30]: ✓ Good
         - generic [ref=e31]:
           - heading "🎯 Optimization Tips" [level=4] [ref=e32]
@@ -61,137 +61,57 @@ Call log:
           - generic [ref=e45]:
             - button "📊 Show Monitoring Dashboard" [ref=e46] [cursor=pointer]
             - button "📈 Show Stepper" [ref=e47] [cursor=pointer]
-            - button "📋 Hide Dynamic Form" [active] [ref=e48] [cursor=pointer]
+            - button "📋 Show Dynamic Form" [ref=e48] [cursor=pointer]
           - generic [ref=e49]:
-            - heading "Case Investigation Form" [level=2] [ref=e50]
+            - heading "Evidence Management" [level=2] [ref=e50]
             - generic [ref=e52]:
-              - heading "Dynamic Form" [level=3] [ref=e53]
-              - generic [ref=e54]:
-                - generic [ref=e55]:
-                  - generic [ref=e56]:
-                    - text: Investigator Name
-                    - generic [ref=e57]: "*"
-                  - textbox "Full name" [ref=e58]
-                - generic [ref=e59]:
-                  - generic [ref=e60]:
-                    - text: Priority Level
-                    - generic [ref=e61]: "*"
-                  - combobox [ref=e62]:
-                    - option "— Select —"
-                    - option "Low"
-                    - option "Medium"
-                    - option "High"
-                    - option "Critical"
-                - generic [ref=e63]:
+              - heading "Damaged Image Case" [level=3] [ref=e53]
+              - paragraph [ref=e54]: Investigation of damaged digital evidence with GAN restoration
+              - generic [ref=e55]:
+                - generic [ref=e57]:
+                  - heading [level=3]
+                  - generic [ref=e58]:
+                    - textbox "filename.png" [ref=e59]
+                    - combobox [ref=e60]:
+                      - option "ESRGAN" [selected]
+                      - option "GFPGAN"
+                      - option "SRGAN"
+                    - button "Add" [ref=e61]
                   - generic [ref=e64]:
-                    - text: Evidence Tags (Searchable)
-                    - generic [ref=e65]: "*"
-                  - generic [ref=e66]:
-                    - searchbox "Поиск..." [ref=e67]
-                    - generic [ref=e68]:
-                      - generic [ref=e69] [cursor=pointer]:
-                        - checkbox "Face" [ref=e70]
-                        - generic [ref=e71]: Face
-                      - generic [ref=e72] [cursor=pointer]:
-                        - checkbox "License Plate" [ref=e73]
-                        - generic [ref=e74]: License Plate
-                      - generic [ref=e75] [cursor=pointer]:
-                        - checkbox "Document" [ref=e76]
-                        - generic [ref=e77]: Document
-                      - generic [ref=e78] [cursor=pointer]:
-                        - checkbox "Handwriting" [ref=e79]
-                        - generic [ref=e80]: Handwriting
-                      - generic [ref=e81] [cursor=pointer]:
-                        - checkbox "Vehicle" [ref=e82]
-                        - generic [ref=e83]: Vehicle
-                      - generic [ref=e84] [cursor=pointer]:
-                        - checkbox "Building" [ref=e85]
-                        - generic [ref=e86]: Building
-                      - generic [ref=e87] [cursor=pointer]:
-                        - checkbox "Weapon" [ref=e88]
-                        - generic [ref=e89]: Weapon
-                      - generic [ref=e90] [cursor=pointer]:
-                        - checkbox "Clothing" [ref=e91]
-                        - generic [ref=e92]: Clothing
-                - generic [ref=e93]:
-                  - generic [ref=e94]:
-                    - text: Contact Phone
-                    - generic [ref=e95]: "*"
-                  - textbox "+1-234-567-8900" [ref=e96]
-                - generic [ref=e97]:
-                  - generic [ref=e98]:
-                    - text: Contact Email
-                    - generic [ref=e99]: "*"
-                  - textbox "investigator@forensics.gov" [ref=e100]
-                - generic [ref=e101]:
-                  - generic [ref=e102]:
-                    - text: Restoration Confidence Level
-                    - generic [ref=e103]: "*"
-                  - generic [ref=e104]:
-                    - generic [ref=e106] [cursor=pointer]: "1"
-                    - generic [ref=e108] [cursor=pointer]: "2"
-                    - generic [ref=e110] [cursor=pointer]: "3"
-                    - generic [ref=e112] [cursor=pointer]: "4"
-                    - generic [ref=e114] [cursor=pointer]: "5"
-                - generic [ref=e115]:
-                  - generic [ref=e116]:
-                    - text: Select GAN Models for Processing
-                    - generic [ref=e117]: "*"
-                  - generic [ref=e118]:
-                    - generic [ref=e120] [cursor=pointer]: ESRGAN (Super-Resolution)
-                    - generic [ref=e122] [cursor=pointer]: GFPGAN (Face Restoration)
-                    - generic [ref=e124] [cursor=pointer]: SRGAN (General SR)
-              - button "Отправить" [disabled] [ref=e126]
-          - generic [ref=e127]:
-            - heading "Evidence Management" [level=2] [ref=e128]
-            - generic [ref=e130]:
-              - heading "Damaged Image Case" [level=3] [ref=e131]
-              - paragraph [ref=e132]: Investigation of damaged digital evidence with GAN restoration
-              - generic [ref=e133]:
-                - generic [ref=e135]:
+                    - generic [ref=e65]:
+                      - generic [ref=e66]: fragment_01.png
+                      - generic [ref=e67]: ESRGAN
+                      - generic [ref=e68]: uploaded
+                    - generic [ref=e69]:
+                      - button "Advance" [ref=e70]
+                      - button "Delete" [ref=e71]
+                - generic [ref=e73]:
                   - heading [level=3]
-                  - generic [ref=e136]:
-                    - textbox "filename.png" [ref=e137]
-                    - combobox [ref=e138]:
+                  - generic [ref=e74]:
+                    - textbox "filename.png" [ref=e75]
+                    - combobox [ref=e76]:
                       - option "ESRGAN" [selected]
                       - option "GFPGAN"
                       - option "SRGAN"
-                    - button "Add" [ref=e139]
-                  - generic [ref=e142]:
-                    - generic [ref=e143]:
-                      - generic [ref=e144]: fragment_01.png
-                      - generic [ref=e145]: ESRGAN
-                      - generic [ref=e146]: uploaded
-                    - generic [ref=e147]:
-                      - button "Advance" [ref=e148]
-                      - button "Delete" [ref=e149]
-                - generic [ref=e151]:
+                    - button "Add" [ref=e77]
+                  - generic [ref=e80]:
+                    - generic [ref=e81]:
+                      - generic [ref=e82]: fragment_02.png
+                      - generic [ref=e83]: GFPGAN
+                      - generic [ref=e84]: processing
+                    - generic [ref=e85]:
+                      - button "Advance" [ref=e86]
+                      - button "Delete" [ref=e87]
+                - generic [ref=e89]:
                   - heading [level=3]
-                  - generic [ref=e152]:
-                    - textbox "filename.png" [ref=e153]
-                    - combobox [ref=e154]:
+                  - generic [ref=e90]:
+                    - textbox "filename.png" [ref=e91]
+                    - combobox [ref=e92]:
                       - option "ESRGAN" [selected]
                       - option "GFPGAN"
                       - option "SRGAN"
-                    - button "Add" [ref=e155]
-                  - generic [ref=e158]:
-                    - generic [ref=e159]:
-                      - generic [ref=e160]: fragment_02.png
-                      - generic [ref=e161]: GFPGAN
-                      - generic [ref=e162]: processing
-                    - generic [ref=e163]:
-                      - button "Advance" [ref=e164]
-                      - button "Delete" [ref=e165]
-                - generic [ref=e167]:
-                  - heading [level=3]
-                  - generic [ref=e168]:
-                    - textbox "filename.png" [ref=e169]
-                    - combobox [ref=e170]:
-                      - option "ESRGAN" [selected]
-                      - option "GFPGAN"
-                      - option "SRGAN"
-                    - button "Add" [ref=e171]
-                  - generic [ref=e173]: No items
+                    - button "Add" [ref=e93]
+                  - generic [ref=e95]: No items
 ```
 
 # Test source
@@ -223,74 +143,60 @@ Call log:
   24 | 
   25 |   test('TC11: Should show validation error on dynamic form required fields', async ({ page }) => {
   26 |     // navigate to dynamic form section
-  27 |     await page.click('button:has-text("Dynamic Form")');
+  27 |     await page.click('button:has-text("✨ Dynamic Form")');
   28 |     await page.waitForSelector('form.dyn-form');
   29 | 
-  30 |     // Submit is disabled for invalid form -> force trigger validation by removing disabled state and dispatching submit
-  31 |     await page.$eval('form.dyn-form button[type="submit"]', (btn: HTMLElement) => btn.removeAttribute('disabled'));
-  32 |     await page.click('form.dyn-form button[type="submit"]');
-  33 | 
-  34 |     const errorLabel = await page.locator('.field.invalid .error small').first();
-  35 |     await expect(errorLabel).toBeVisible();
-  36 |     await expect(errorLabel).toContainText(/обязательно|required/i);
-  37 |   });
-  38 | 
-  39 |   test('TC12: Should submit dynamic form when fields are valid', async ({ page }) => {
-  40 |     await page.click('button:has-text("Dynamic Form")');
-  41 |     await page.waitForSelector('form.dyn-form');
-  42 | 
-  43 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
-  44 |     await page.fill('input[formcontrolname="email"]', 'dynamic-test@forensics.gov');
-  45 |     await page.selectOption('select[formcontrolname="priority"]', { index: 1 });
-  46 |     await page.click('form.dyn-form input[type="checkbox"]');
-  47 | 
-  48 |     await page.waitForSelector('form.dyn-form button[type="submit"]:not([disabled])');
-  49 |     await page.click('form.dyn-form button[type="submit"]');
+  30 |     // submit empty dynamic form
+  31 |     await page.click('form.dyn-form button[type="submit"]');
+  32 | 
+  33 |     const errorLabel = await page.locator('.field.invalid .error small').first();
+  34 |     await expect(errorLabel).toBeVisible();
+  35 |     await expect(errorLabel).toContainText(/obligatro.*заполнения|required/i);
+  36 |   });
+  37 | 
+  38 |   test('TC12: Should submit dynamic form when fields are valid', async ({ page }) => {
+  39 |     await page.click('button:has-text("✨ Dynamic Form")');
+  40 |     await page.waitForSelector('form.dyn-form');
+  41 | 
+  42 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
+  43 |     await page.fill('input[formcontrolname="email"]', 'dynamic-test@forensics.gov');
+  44 | 
+  45 |     await page.click('form.dyn-form button[type="submit"]');
+  46 | 
+  47 |     // After successful submit, form should still exist and no errors displayed
+  48 |     await expect(page.locator('.field.invalid')).toHaveCount(0);
+  49 |   });
   50 | 
-  51 |     // After successful submit, form should still exist and no validation errors displayed
-  52 |     await expect(page.locator('.field.invalid')).toHaveCount(0);
-  53 |   });
+  51 |   test('TC13: Should display invalid email warning in dynamic form', async ({ page }) => {
+> 52 |     await page.click('button:has-text("✨ Dynamic Form")');
+     |                ^ TimeoutError: page.click: Timeout 15000ms exceeded.
+  53 |     await page.waitForSelector('form.dyn-form');
   54 | 
-  55 |   test('TC13: Should display invalid email warning in dynamic form', async ({ page }) => {
-  56 |     await page.click('button:has-text("Dynamic Form")');
-  57 |     await page.waitForSelector('form.dyn-form');
-  58 | 
-> 59 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
-     |                ^ TimeoutError: page.fill: Timeout 15000ms exceeded.
-  60 |     await page.fill('input[formcontrolname="email"]', 'not-an-email');
-  61 |     await page.selectOption('select[formcontrolname="priority"]', { index: 1 });
-  62 | 
-  63 |     // Form submission should not be allowed if invalid email present
-  64 |     const submitBtn = page.locator('form.dyn-form button[type="submit"]');
-  65 |     await expect(submitBtn).toBeDisabled();
-  66 | 
-  67 |     // Force submit and check validation errors
-  68 |     await page.$eval('form.dyn-form button[type="submit"]', (btn: HTMLElement) => btn.removeAttribute('disabled'));
-  69 |     await submitBtn.click();
-  70 | 
-  71 |     const err = page.locator('.field.invalid .error small');
-  72 |     await expect(err).toHaveCount(1);
-  73 |   });
-  74 | 
-  75 |   test('TC14: Should allow multi-select and check UI items', async ({ page }) => {
-  76 |     await page.click('button:has-text("Dynamic Form")');
-  77 |     await page.waitForSelector('form.dyn-form');
-  78 | 
-  79 |     // set required fields
-  80 |     await page.fill('input[formcontrolname="name"]', 'Multi Test');
-  81 |     await page.fill('input[formcontrolname="email"]', 'multiselect@forensics.gov');
-  82 |     await page.selectOption('select[formcontrolname="priority"]', { index: 1 });
-  83 | 
-  84 |     // interact with multi-select checkbox options if any
-  85 |     const checkboxes = page.locator('form.dyn-form input[type="checkbox"]');
-  86 |     const count = await checkboxes.count();
-  87 |     if (count > 0) {
-  88 |       await checkboxes.first().check();
-  89 |       await expect(checkboxes.first()).toBeChecked();
-  90 |     }
-  91 | 
-  92 |     await expect(page.locator('form.dyn-form')).toBeVisible();
-  93 |   });
-  94 | });
-  95 | 
+  55 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
+  56 |     await page.fill('input[formcontrolname="email"]', 'not-an-email');
+  57 | 
+  58 |     await page.click('form.dyn-form button[type="submit"]');
+  59 | 
+  60 |     const err = page.locator('.field.invalid').filter({ hasText: /email/i });
+  61 |     await expect(err).toHaveCount(1);
+  62 |   });
+  63 | 
+  64 |   test('TC14: Should allow multi-select and check UI items', async ({ page }) => {
+  65 |     await page.click('button:has-text("✨ Dynamic Form")');
+  66 |     await page.waitForSelector('form.dyn-form');
+  67 | 
+  68 |     // set a custom value for existing email field
+  69 |     await page.fill('input[formcontrolname="email"]', 'multiselect@forensics.gov');
+  70 |     await page.fill('input[formcontrolname="name"]', 'Multi Test');
+  71 | 
+  72 |     const selectInput = page.locator('select[formcontrolname="category"]');
+  73 |     if (await selectInput.count()) {
+  74 |       await selectInput.selectOption({ index: 1 });
+  75 |       expect(await selectInput.inputValue()).not.toBe('');
+  76 |     }
+  77 | 
+  78 |     await expect(page.locator('form.dyn-form')).toBeVisible();
+  79 |   });
+  80 | });
+  81 | 
 ```

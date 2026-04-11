@@ -6,8 +6,8 @@
 
 # Test info
 
-- Name: forms\form-validation.spec.ts >> Forms Validation (TC11-TC14) >> TC12: Should submit dynamic form when fields are valid
-- Location: tests\forms\form-validation.spec.ts:38:7
+- Name: forms\form-validation.spec.ts >> Forms Validation (TC11-TC14) >> TC11: Should show validation error on dynamic form required fields
+- Location: tests\forms\form-validation.spec.ts:25:7
 
 # Error details
 
@@ -44,7 +44,7 @@ Call log:
             - generic [ref=e25]: Measuring...
           - generic [ref=e26]:
             - generic [ref=e27]: TTFB (Time to First Byte)
-            - generic [ref=e28]: 6ms
+            - generic [ref=e28]: 5ms
             - generic [ref=e30]: ✓ Good
         - generic [ref=e31]:
           - heading "🎯 Optimization Tips" [level=4] [ref=e32]
@@ -143,7 +143,8 @@ Call log:
   24 | 
   25 |   test('TC11: Should show validation error on dynamic form required fields', async ({ page }) => {
   26 |     // navigate to dynamic form section
-  27 |     await page.click('button:has-text("✨ Dynamic Form")');
+> 27 |     await page.click('button:has-text("✨ Dynamic Form")');
+     |                ^ TimeoutError: page.click: Timeout 15000ms exceeded.
   28 |     await page.waitForSelector('form.dyn-form');
   29 | 
   30 |     // submit empty dynamic form
@@ -155,8 +156,7 @@ Call log:
   36 |   });
   37 | 
   38 |   test('TC12: Should submit dynamic form when fields are valid', async ({ page }) => {
-> 39 |     await page.click('button:has-text("✨ Dynamic Form")');
-     |                ^ TimeoutError: page.click: Timeout 15000ms exceeded.
+  39 |     await page.click('button:has-text("✨ Dynamic Form")');
   40 |     await page.waitForSelector('form.dyn-form');
   41 | 
   42 |     await page.fill('input[formcontrolname="name"]', 'Automation User');
