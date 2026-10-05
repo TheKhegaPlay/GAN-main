@@ -9,7 +9,7 @@
     "serve:ssr": "npm run build:ssr && node dist/gan-front/server/main.js",
     "dev:ssr": "npm run serve:ssr",
     "mock:api": "json-server --watch db.json --port 3001",
-    "test:unit": "ng test --watch=false --browsers=ChromeHeadless",
+    "test:unit": "ng test --watch=false --browsers=ChromeHeadlessCI",
     "test:e2e": "playwright test",
     "test:ci": "npm run test:unit && npm run test:e2e",
     "test:e2e:headed": "playwright test --headed",
