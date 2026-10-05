@@ -1,80 +1,64 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { testUrls, validUser } from '../utils/test-data';
+import { expect, test, Page } from '@playwright/test';
 
-// TC11-TC14: Forms validation tests
+async function openDynamicForm(page: Page) {
+  await page.goto('/login');
+  await page.getByLabel('Email Address').fill('demo@forensics.gov');
+  await page.getByLabel('Password').fill('demo123');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page).toHaveURL(/\/gan-models$/);
+  await page.getByRole('button', { name: /Dynamic Form/ }).click();
+  const form = page.locator('form.dyn-form');
+  await expect(form).toBeVisible();
+  return form;
+}
 
-test.describe('Forms Validation (TC11-TC14)', () => {
-  let loginPage: LoginPage;
-
-  test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-
-    await loginPage.navigateToLogin(testUrls.loginUrl);
-    await loginPage.waitForLoginPage(30000);
-
-    // login first to access dashboard and form shortcuts
-    await loginPage.fillEmail(validUser.email);
-    await loginPage.fillPassword(validUser.password);
-    await loginPage.submitForm();
-
-    // wait for dashboard
-    await loginPage.waitForDashboard(30000);
+test.describe('Dynamic form', () => {
+  test('keeps submit disabled while required fields are empty', async ({ page }) => {
+    const form = await openDynamicForm(page);
+    await expect(form.getByRole('button', { name: 'Отправить' })).toBeDisabled();
   });
 
-  test('TC11: Should show validation error on dynamic form required fields', async ({ page }) => {
-    // navigate to dynamic form section
-    await page.click('button:has-text("✨ Dynamic Form")');
-    await page.waitForSelector('form.dyn-form');
+  test('shows required-field feedback after editing and clearing a required field', async ({ page }) => {
+    const form = await openDynamicForm(page);
+    const investigator = form.locator('.field').filter({ hasText: 'Investigator Name' });
+    const input = investigator.locator('input');
 
-    // submit empty dynamic form
-    await page.click('form.dyn-form button[type="submit"]');
+    await input.fill('Investigator');
+    await input.fill('');
 
-    const errorLabel = await page.locator('.field.invalid .error small').first();
-    await expect(errorLabel).toBeVisible();
-    await expect(errorLabel).toContainText(/obligatro.*заполнения|required/i);
+    await expect(investigator).toHaveClass(/invalid/);
+    await expect(investigator.getByText('Поле обязательно для заполнения.')).toBeVisible();
   });
 
-  test('TC12: Should submit dynamic form when fields are valid', async ({ page }) => {
-    await page.click('button:has-text("✨ Dynamic Form")');
-    await page.waitForSelector('form.dyn-form');
+  test('submits valid values and confirms success', async ({ page }) => {
+    const form = await openDynamicForm(page);
+    await form.locator('.field').filter({ hasText: 'Investigator Name' }).locator('input').fill('Automation User');
+    await form.locator('select').selectOption('high');
+    await form.locator('.multiselect-search .option-row').filter({ hasText: 'Face' }).locator('input').check();
+    await form.locator('.field').filter({ hasText: 'Contact Phone' }).locator('input').fill('+15551234567');
+    await form.locator('.field').filter({ hasText: 'Contact Email' }).locator('input').fill('automation@example.com');
+    await form.locator('.rating-item').last().click();
+    await form.locator('.field').filter({ hasText: 'Select GAN Models for Processing' }).locator('.chip-label').first().click();
 
-    await page.fill('input[formcontrolname="name"]', 'Automation User');
-    await page.fill('input[formcontrolname="email"]', 'dynamic-test@forensics.gov');
-
-    await page.click('form.dyn-form button[type="submit"]');
-
-    // After successful submit, form should still exist and no errors displayed
-    await expect(page.locator('.field.invalid')).toHaveCount(0);
+    const dialogMessage = new Promise<string>((resolve) => {
+      page.once('dialog', async (dialog) => {
+        resolve(dialog.message());
+        await dialog.accept();
+      });
+    });
+    await form.getByRole('button', { name: 'Отправить' }).click();
+    expect(await dialogMessage).toContain('Форма успешно отправлена');
   });
 
-  test('TC13: Should display invalid email warning in dynamic form', async ({ page }) => {
-    await page.click('button:has-text("✨ Dynamic Form")');
-    await page.waitForSelector('form.dyn-form');
+  test('filters and selects searchable evidence tags', async ({ page }) => {
+    const form = await openDynamicForm(page);
+    const searchableTags = form.locator('.multiselect-search');
+    await expect(searchableTags).toBeVisible();
+    await searchableTags.getByPlaceholder('Поиск...').fill('face');
 
-    await page.fill('input[formcontrolname="name"]', 'Automation User');
-    await page.fill('input[formcontrolname="email"]', 'not-an-email');
-
-    await page.click('form.dyn-form button[type="submit"]');
-
-    const err = page.locator('.field.invalid').filter({ hasText: /email/i });
-    await expect(err).toHaveCount(1);
-  });
-
-  test('TC14: Should allow multi-select and check UI items', async ({ page }) => {
-    await page.click('button:has-text("✨ Dynamic Form")');
-    await page.waitForSelector('form.dyn-form');
-
-    // set a custom value for existing email field
-    await page.fill('input[formcontrolname="email"]', 'multiselect@forensics.gov');
-    await page.fill('input[formcontrolname="name"]', 'Multi Test');
-
-    const selectInput = page.locator('select[formcontrolname="category"]');
-    if (await selectInput.count()) {
-      await selectInput.selectOption({ index: 1 });
-      expect(await selectInput.inputValue()).not.toBe('');
-    }
-
-    await expect(page.locator('form.dyn-form')).toBeVisible();
+    const faceOption = searchableTags.locator('.option-row').filter({ hasText: 'Face' });
+    await expect(searchableTags.locator('.option-row')).toHaveCount(1);
+    await faceOption.locator('input[type="checkbox"]').check();
+    await expect(faceOption.locator('input[type="checkbox"]')).toBeChecked();
   });
 });

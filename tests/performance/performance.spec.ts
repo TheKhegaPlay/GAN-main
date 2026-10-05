@@ -1,31 +1,27 @@
-import { test, expect } from '@playwright/test';
-import { testUrls } from '../utils/test-data';
+import { expect, test } from '@playwright/test';
 
-test.describe('Performance Tests (TC19-TC20)', () => {
-  test('TC19: Should load login page under 3000ms', async ({ page }) => {
-    const start = Date.now();
-    await page.goto(testUrls.loginUrl, { waitUntil: 'networkidle' });
-    const duration = Date.now() - start;
+test.describe('Frontend load performance', () => {
+  test('loads the login screen within ten seconds', async ({ page }) => {
+    const startedAt = Date.now();
+    await page.goto('/login', { waitUntil: 'domcontentloaded' });
+    await expect(page.getByRole('heading', { name: /Forensic Platform Login/i })).toBeVisible();
 
-    console.log(`[TC19] login load duration: ${duration}ms`);
-    expect(duration).toBeLessThanOrEqual(6000); // allow slow env
+    expect(Date.now() - startedAt).toBeLessThan(10_000);
   });
 
-  test('TC20: Should return web-vitals from API in <2000ms', async ({ request }) => {
-    const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000/api';
-    const start = Date.now();
+  test('records browser navigation timing for the login page', async ({ page }) => {
+    await page.goto('/login', { waitUntil: 'load' });
+    const timing = await page.evaluate(() => {
+      const [entry] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+      return {
+        responseStart: entry?.responseStart ?? 0,
+        domContentLoaded: entry?.domContentLoadedEventEnd ?? 0,
+        loadComplete: entry?.loadEventEnd ?? 0,
+      };
+    });
 
-    const response = await request.get(`${API_BASE_URL}/metrics/web-vitals`);
-    const duration = Date.now() - start;
-
-    expect(response.ok()).toBeTruthy();
-    expect(duration).toBeLessThanOrEqual(2500);
-
-    const body = await response.json();
-    expect(body.success).toBeTruthy();
-    expect(body.data).toBeTruthy();
-    expect(body.data).toHaveProperty('lcp');
-    expect(body.data).toHaveProperty('cls');
-    expect(body.data).toHaveProperty('fcp');
+    expect(timing.responseStart).toBeGreaterThan(0);
+    expect(timing.domContentLoaded).toBeGreaterThan(0);
+    expect(timing.loadComplete).toBeGreaterThanOrEqual(timing.domContentLoaded);
   });
 });

@@ -1,34 +1,35 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { testUrls, validUser } from '../utils/test-data';
+import { expect, test, Page } from '@playwright/test';
 
-test.describe('Dashboard Navigation (TC17-TC18)', () => {
-  let loginPage: LoginPage;
+async function signIn(page: Page) {
+  await page.goto('/login');
+  await page.getByLabel('Email Address').fill('demo@forensics.gov');
+  await page.getByLabel('Password').fill('demo123');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await expect(page).toHaveURL(/\/gan-models$/);
+}
 
+test.describe('GAN models dashboard', () => {
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
-    await loginPage.navigateToLogin(testUrls.loginUrl);
-    await loginPage.waitForLoginPage(30000);
-    await loginPage.fillEmail(validUser.email);
-    await loginPage.fillPassword(validUser.password);
-    await loginPage.submitForm();
-    await loginPage.waitForDashboard(30000);
+    await signIn(page);
   });
 
-  test('TC17: Should land on GAN models dashboard after login', async ({ page }) => {
-    await expect(page).toHaveURL(/gan-models/);
-    await expect(page.locator('h1')).toContainText(/GAN Models Dashboard/i);
+  test('shows the authenticated dashboard', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /GAN Models Dashboard/i })).toBeVisible();
+    await expect(page.getByText('Forensic Investigator')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Logout' })).toBeVisible();
   });
 
-  test('TC18: Should logout from dashboard and return to login', async ({ page }) => {
-    const [dialog] = await Promise.all([
-      page.waitForEvent('dialog'),
-      page.click('button.logout-btn'),
-    ]);
-    await expect(dialog.message()).toContain('Are you sure you want to logout');
-    await dialog.accept();
+  test('logs out and clears the session', async ({ page }) => {
+    const dialogMessage = new Promise<string>((resolve) => {
+      page.once('dialog', async (dialog) => {
+        resolve(dialog.message());
+        await dialog.accept();
+      });
+    });
 
-    await expect(page).toHaveURL(/login/);
-    await expect(page.locator('h1')).toContainText(/Forensic Platform Login/i);
+    await page.getByRole('button', { name: 'Logout' }).click();
+    expect(await dialogMessage).toContain('Are you sure you want to logout');
+    await expect(page).toHaveURL(/\/login$/);
+    expect(await page.evaluate(() => sessionStorage.getItem('isAuthenticated'))).toBeNull();
   });
 });
