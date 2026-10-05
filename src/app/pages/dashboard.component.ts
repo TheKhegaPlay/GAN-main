@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { DynamicFormComponent } from '../dynamic-forms/dynamic-form.component';
 import { FieldConfig } from '../dynamic-forms/dynamic-form.models';
 import { LighthouseDemoComponent } from '../components/lighthouse-demo.component';
+import { GanRestorationComponent } from '../components/gan-restoration.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +22,8 @@ import { LighthouseDemoComponent } from '../components/lighthouse-demo.component
     StepperExampleComponent,
     MonitoringDashboardComponent,
     DynamicFormComponent,
-    LighthouseDemoComponent
+    LighthouseDemoComponent,
+    GanRestorationComponent
   ],
   template: `
     <div class="dashboard-container">
@@ -39,6 +41,9 @@ import { LighthouseDemoComponent } from '../components/lighthouse-demo.component
       <div [hidden]="showLighthouseDemo" class="forensic-content">
         <!-- Top Navigation Buttons -->
         <div class="nav-buttons">
+          <button (click)="showRestoration = !showRestoration" class="nav-btn primary">
+            🔧 {{ showRestoration ? 'Hide' : 'Show' }} GAN Image Restoration
+          </button>
           <button (click)="showDashboard = !showDashboard" class="nav-btn">
             📊 {{ showDashboard ? 'Hide' : 'Show' }} Monitoring Dashboard
           </button>
@@ -48,6 +53,11 @@ import { LighthouseDemoComponent } from '../components/lighthouse-demo.component
           <button (click)="showDynamic = !showDynamic" class="nav-btn">
             📋 {{ showDynamic ? 'Hide' : 'Show' }} Dynamic Form
           </button>
+        </div>
+
+        <!-- GAN Restoration Component -->
+        <div *ngIf="showRestoration" class="restoration-section m-4">
+          <app-gan-restoration></app-gan-restoration>
         </div>
 
         <!-- Monitoring Dashboard -->
@@ -153,13 +163,43 @@ import { LighthouseDemoComponent } from '../components/lighthouse-demo.component
       color: #667eea;
     }
 
+    .nav-btn.primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+
+    .nav-btn.primary:hover {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
     .stepper-section,
-    .dynamic-form-section {
+    .dynamic-form-section,
+    .restoration-section {
       background: white;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
       margin-top: 20px;
+    }
+
+    .restoration-section {
+      border-left: 4px solid #667eea;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .evidence-section {
@@ -222,6 +262,7 @@ import { LighthouseDemoComponent } from '../components/lighthouse-demo.component
 export class DashboardComponent implements OnInit {
   state$!: Observable<ForensicState>;
   showLighthouseDemo = false;
+  showRestoration = false;
 
   statuses: EvidenceStatus[] = ['uploaded', 'processing', 'restored'];
   showStepper = false;

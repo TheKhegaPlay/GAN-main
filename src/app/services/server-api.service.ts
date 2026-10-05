@@ -216,4 +216,127 @@ export class ServerApiService {
       return error.error?.message || 'An error occurred. Please try again.';
     }
   }
+
+  /**
+   * Restore damaged image using AOT-GAN
+   * @param image base64 encoded image
+   * @param mask optional base64 encoded mask
+   * @param maskType type of mask to generate if not provided
+   * @param maskRatio coverage ratio of mask (0-1)
+   */
+  restoreImage(
+    image: string,
+    mask?: string,
+    maskType: string = 'irregular',
+    maskRatio: number = 0.3
+  ): Observable<any> {
+    const backendUrl = 'http://localhost:8000'; // FastAPI backend
+    const payload = {
+      image,
+      mask: mask || null,
+      mask_type: maskType,
+      mask_ratio: maskRatio
+    };
+
+    return this.http.post<any>(`${backendUrl}/api/restore`, payload).pipe(
+      map(data => ({
+        success: true,
+        data,
+        timestamp: Date.now()
+      })),
+      catchError(error => {
+        console.error('Image restoration failed:', error);
+        return of({
+          success: false,
+          error: this.getErrorMessage(error),
+          timestamp: Date.now()
+        });
+      })
+    );
+  }
+
+  /**
+   * Upload a custom mask file
+   * @param file mask image file
+   */
+  uploadMask(file: File): Observable<any> {
+    const backendUrl = 'http://localhost:8000';
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(`${backendUrl}/api/upload-mask`, formData).pipe(
+      map(data => ({
+        success: true,
+        data,
+        timestamp: Date.now()
+      })),
+      catchError(error => {
+        console.error('Mask upload failed:', error);
+        return of({
+          success: false,
+          error: this.getErrorMessage(error),
+          timestamp: Date.now()
+        });
+      })
+    );
+  }
+
+  /**
+   * Generate a random mask
+   * @param maskType type of mask ('irregular', 'center', 'rectangular', 'random_brush')
+   * @param width image width
+   * @param height image height
+   * @param ratio mask coverage ratio
+   */
+  generateMask(
+    maskType: string = 'irregular',
+    width: number = 512,
+    height: number = 512,
+    ratio: number = 0.3
+  ): Observable<any> {
+    const backendUrl = 'http://localhost:8000';
+
+    return this.http
+      .get<any>(
+        `${backendUrl}/api/generate-mask/${maskType}?width=${width}&height=${height}&ratio=${ratio}`
+      )
+      .pipe(
+        map(data => ({
+          success: true,
+          data,
+          timestamp: Date.now()
+        })),
+        catchError(error => {
+          console.error('Mask generation failed:', error);
+          return of({
+            success: false,
+            error: this.getErrorMessage(error),
+            timestamp: Date.now()
+          });
+        })
+      );
+  }
+
+  /**
+   * Check backend health status
+   */
+  checkBackendHealth(): Observable<any> {
+    const backendUrl = 'http://localhost:8000';
+
+    return this.http.get<any>(`${backendUrl}/health`).pipe(
+      map(data => ({
+        success: true,
+        data,
+        timestamp: Date.now()
+      })),
+      catchError(error => {
+        console.error('Backend health check failed:', error);
+        return of({
+          success: false,
+          error: this.getErrorMessage(error),
+          timestamp: Date.now()
+        });
+      })
+    );
+  }
 }

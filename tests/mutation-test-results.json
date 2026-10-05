@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-04-24T19:52:52.868Z",
+  "mutationScore": "55.6",
+  "killedMutants": 5,
+  "survivingMutants": 4,
+  "totalMutants": 9,
+  "mutations": [
+    {
+      "id": "M1",
+      "module": "auth.service.ts",
+      "component": "validateEmail",
+      "type": "Operator Change",
+      "original": "=== true",
+      "mutant": "== true",
+      "lineNum": 3,
+      "survived": false,
+      "killedBy": "validates email with type mismatch"
+    },
+    {
+      "id": "M2",
+      "module": "auth.service.ts",
+      "component": "verifyPassword",
+      "type": "Constant Modification",
+      "original": "rounds = 10",
+      "mutant": "rounds = 5",
+      "lineNum": 9,
+      "survived": true,
+      "killedBy": null
+    },
+    {
+      "id": "M3",
+      "module": "auth.service.ts",
+      "component": "checkTokenExpiry",
+      "type": "Return Value Change",
+      "original": "return !isExpired",
+      "mutant": "return true",
+      "lineNum": 15,
+      "survived": false,
+      "killedBy": "rejects expired token after TTL"
+    },
+    {
+      "id": "M4",
+      "module": "dashboard.component.ts",
+      "component": "filterDataByRole",
+      "type": "Operator Change",
+      "original": "item.roles.includes(role) && item.active === true",
+      "mutant": "item.roles.includes(role) || item.active === true",
+      "lineNum": 22,
+      "survived": false,
+      "killedBy": "user sees only assigned role data"
+    },
+    {
+      "id": "M5",
+      "module": "dashboard.component.ts",
+      "component": "calculateMetrics",
+      "type": "Function Removal",
+      "original": "const aggregated = this.aggregateData(rawData);",
+      "mutant": "// removed aggregation",
+      "lineNum": 30,
+      "survived": true,
+      "killedBy": null
+    },
+    {
+      "id": "M6",
+      "module": "dashboard.component.ts",
+      "component": "cacheKey",
+      "type": "Constant Modification",
+      "original": "version = \"v1\"",
+      "mutant": "version = \"v2\"",
+      "lineNum": 39,
+      "survived": true,
+      "killedBy": null
+    },
+    {
+      "id": "M7",
+      "module": "dynamic-form.service.ts",
+      "component": "validateRequired",
+      "type": "Operator Change",
+      "original": "value.length > 0",
+      "mutant": "value.length >= 0",
+      "lineNum": 48,
+      "survived": false,
+      "killedBy": "rejects empty string in required field"
+    },
+    {
+      "id": "M8",
+      "module": "dynamic-form.service.ts",
+      "component": "sanitizeInput",
+      "type": "Function Removal",
+      "original": "const htmlEscaped = this.escapeHtml(input);",
+      "mutant": "// removed HTML escaping",
+      "lineNum": 55,
+      "survived": false,
+      "killedBy": "escapes HTML in user input"
+    },
+    {
+      "id": "M9",
+      "module": "dynamic-form.service.ts",
+      "component": "checkMinLength",
+      "type": "Constant Modification",
+      "original": "minLength = 8",
+      "mutant": "minLength = 3",
+      "lineNum": 63,
+      "survived": true,
+      "killedBy": null
+    }
+  ],
+  "recommendations": [
+    "Add security configuration validation tests (bcrypt rounds)",
+    "Verify calculation step correctness in dashboard metrics",
+    "Test cache coherence across multiple instances",
+    "Add performance tests for password hashing",
+    "Implement integration tests for aggregation logic"
+  ]
+}
