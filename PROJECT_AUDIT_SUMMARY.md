@@ -9,7 +9,7 @@ This document consolidates the useful project, implementation, QA, CI/CD, perfor
 
 GAN-Front is an Angular 18 and TypeScript frontend for forensic image restoration. It includes image upload and masking UI, restoration workflow wiring, authentication and dashboard views, dynamic forms, SSR configuration, and performance-monitoring/optimization services. The restoration screen calls a service intended to send work to a backend; the current repository's latest commit is described as an Angular version without a backend. Treat model execution and resulting scientific metrics as unverified until a working model service and reproducible evaluation are connected.
 
-The repository is committed to Git and publicly hosted on GitHub. Browser and SSR production builds now pass, and the local combined test run passes 3 Angular unit tests and 14 Playwright E2E tests. GitHub Actions workflows now use the npm scripts and build targets that exist in the project. A CSS budget warning remains, the license file is absent, and the hosted Actions run cannot be confirmed until these changes are pushed.
+The repository is committed to Git and publicly hosted on GitHub. Browser, SSR, and GitHub Pages static builds pass, and the local combined test run passes 3 Angular unit tests and 14 Playwright E2E tests. The main GitHub Actions workflow now tests and deploys a static SPA to Pages after success. A CSS budget warning remains, the license file is absent, and the hosted deployment must be confirmed by a successful Actions run.
 
 ## Project and Technology
 
@@ -40,7 +40,7 @@ Ran `npm run build` and `npm run build:ssr`. Both completed successfully. The in
 
 ### CI workflow and npm scripts
 
-The root [`package.json`](package.json) now defines `test:unit` and `test:ci`; the latter runs unit and E2E tests. `.github/workflows/ci.yml` runs the existing `build:ssr` target, verifies the server bundle, and executes `test:ci`. The scheduled/manual E2E workflow uses the same SSR build and Playwright target. The `lint` script is still a production Angular build, not ESLint. Workflows were validated locally through their build/test commands, but no hosted GitHub Actions run has occurred for these unpushed changes.
+The root [`package.json`](package.json) defines `test:unit` and `test:ci`; the latter runs unit and E2E tests. `.github/workflows/ci.yml` builds/verifies SSR, runs `test:ci`, builds a static Pages bundle with the repository base path, and deploys it after success on `main`. The scheduled/manual E2E workflow uses the SSR build and Playwright target. The `lint` script is still a production Angular build, not ESLint. Local build/test commands and the static base-path build passed; hosted deployment must be confirmed in Actions.
 
 ### Automated tests
 
@@ -64,13 +64,13 @@ Older Lighthouse reports list target or expected Web Vitals numbers (for example
 |---|---|---|
 | Use Git version control | **Done** | `.git` history exists; repository is on `main` with a GitHub remote. |
 | Host on GitHub, including README, license, issues, etc. | **Partially done** | Public GitHub repo, README, and Issues are present. Add the appropriate license file; consider creating and maintaining issues for outstanding work. |
-| Set up a basic CI/CD pipeline | **Implemented; hosted run pending** | Push/PR workflow builds browser and SSR bundles and runs unit/E2E tests; scheduled/manual workflow runs E2E. Local build and tests pass. Push these changes to confirm a green GitHub Actions run. No automated deployment is configured. |
+| Set up a basic CI/CD pipeline | **Implemented; hosted run pending** | Push/PR workflow builds and tests; successful pushes to `main` deploy the static SPA to GitHub Pages. Scheduled/manual workflow runs E2E. Enable Pages with **Settings → Pages → GitHub Actions**, then confirm a successful hosted run. |
 | Justify selected technologies | **Done in this consolidated document** | The technology choices and their project fit are documented above; retain this document with the repo. |
 | Apply automated testing tools, if possible | **Implemented; locally passing** | Karma/Jasmine and Playwright run through `npm run test:ci`; latest run passed 3 unit and 14 E2E tests. Confirm results in the hosted Actions run after push. |
 
 ## Remaining Work, In Priority Order
 
-1. Push these changes and verify both GitHub Actions workflows pass on GitHub.
+1. Set Pages source to **GitHub Actions**, push these changes, and verify the deployment URL and both workflow runs.
 2. Add the license selected by the project owner/course requirements.
 3. Connect or clearly scope the GAN restoration backend. For a scientific module, document the model/version, dataset, mask-generation setup, evaluation procedure, and reproducible SSIM/PSNR/MSE results.
 4. Only after fresh Lighthouse runs, replace historical performance targets with measured values and attach the reports.

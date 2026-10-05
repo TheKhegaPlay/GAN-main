@@ -41,3 +41,11 @@ The restoration component's inline styles exceed the 4 kB warning threshold but 
 ## Practical Assignment Status
 
 Git version control and public GitHub hosting are in place. The README, GitHub Issues, automated tests, and CI workflows exist; build and tests pass locally. The license is missing, and the GitHub-hosted workflow must still be confirmed after these changes are pushed. The technology rationale and detailed checklist are in the [audit summary](PROJECT_AUDIT_SUMMARY.md).
+
+## Deploy to GitHub Pages
+
+1. In the repository, open **Settings → Pages** and set the build source to **GitHub Actions**.
+2. Push to `main`, or run the `CI` workflow manually from the **Actions** tab. It runs build and tests before deploying.
+3. After a successful run, open `https://thekhegplay.github.io/GAN-main/`.
+
+The workflow publishes a static Angular SPA with a repository-aware base path and route fallback. GitHub Pages does not run Angular SSR or the Python/GAN backend; restoration inference requires a separately hosted backend.
