@@ -37,6 +37,25 @@ The restoration component's inline styles exceed the 4 kB warning threshold but 
 - `tests/`: Playwright specs and page objects.
 - `.github/workflows/`: CI and E2E workflow definitions.
 - `PROJECT_AUDIT_SUMMARY.md`: consolidated project and assignment audit, requirement status, historical report summary, and remaining work.
+- `backend/`: FastAPI API, database initialization, authenticated file storage, audit log, and PDF report scaffold.
+
+## Python Backend
+
+The backend runs separately from Angular:
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+Copy-Item .env.example .env
+python -m pip install -r requirements-dev.txt
+uvicorn app.main:app --reload
+```
+
+See [backend/README.md](backend/README.md) for API details and the current model
+checkpoint limitation. The provided `.pt` files do not include their model
+architectures, so the backend does not claim successful inference until those
+implementations are available.
 
 ## Practical Assignment Status
 

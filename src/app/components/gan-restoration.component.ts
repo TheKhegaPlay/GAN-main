@@ -1,19 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ServerApiService } from '../services/server-api.service';
+import { BackendApiService, RestorationResponse, StoredFileResponse } from '../services/backend-api.service';
 
 interface RestorationResult {
+  sessionId: string;
   originalImage: string;
-  maskedImage: string;
+  maskedImage: string | null;
   restoredImage: string;
-  confidenceScore: number;
-  metrics: {
-    ssim: number;
-    psnr: number;
-    mse: number;
-  };
-  processingTimeMsMs: number;
+  confidenceScore: number | null;
+  confidenceMetric: string | null;
+  metrics: ImageQualityMetrics;
+  processingTimeMsMs: number | null;
+}
+
+interface ImageQualityMetrics {
+  qualityReferenceAvailable: boolean;
+  psnrDb: number | null;
+  ssim: number | null;
+  lpips: number | null;
+  lpipsStatus: string;
+  note: string;
+  referenceSha256: string | null;
 }
 
 @Component({
@@ -71,6 +81,8 @@ interface RestorationResult {
             <div class="preview-item">
               <div class="preview-label">Original Image</div>
               <img [src]="uploadedImage" alt="Original" class="preview-image" />
+              <p *ngIf="isUploading">Uploading and hashing file...</p>
+              <p *ngIf="uploadedImageRecord">SHA-256: <code>{{ uploadedImageRecord.sha256 }}</code></p>
               <button (click)="clearUpload()" class="clear-btn">Clear</button>
             </div>
           </div>
@@ -86,41 +98,25 @@ interface RestorationResult {
           <div class="mask-options">
             <!-- Mask Type Selection -->
             <div class="mask-type-selector">
-              <label>Mask Type:</label>
-              <select [(ngModel)]="selectedMaskType" class="form-select">
-                <option value="irregular">Irregular</option>
-                <option value="center">Center Square</option>
-                <option value="rectangular">Random Rectangles</option>
-                <option value="random_brush">Brush Strokes</option>
+              <label>Restoration mode:</label>
+              <select [(ngModel)]="restorationMode" class="form-select">
+                <option value="auto" disabled>Automatic detection (not supported by this model)</option>
+                <option value="masked">Use a drawn or uploaded mask</option>
               </select>
-            </div>
-
-            <!-- Mask Ratio Slider -->
-            <div class="mask-ratio-slider">
-              <label>
-                Coverage: <strong>{{ (maskRatio * 100).toFixed(0) }}%</strong>
-              </label>
-              <input
-                type="range"
-                min="0.05"
-                max="0.8"
-                step="0.05"
-                [(ngModel)]="maskRatio"
-                class="slider" />
             </div>
 
             <!-- Action Buttons -->
             <div class="mask-actions">
               <button
-                (click)="generateRandomMask()"
-                [disabled]="!uploadedImage || isProcessing"
+                (click)="clearMask()"
+                [disabled]="!uploadedImageRecord || isUploading || isProcessing"
                 class="mask-btn primary">
-                🎲 Generate Random Damage
+                Clear Mask
               </button>
 
               <button
                 (click)="uploadMaskInput.click()"
-                [disabled]="!uploadedImage || isProcessing"
+                [disabled]="!uploadedImageRecord || isUploading || isProcessing"
                 class="mask-btn">
                 📤 Upload Custom Mask
               </button>
@@ -131,6 +127,21 @@ interface RestorationResult {
                 accept="image/*"
                 (change)="onMaskFileSelected($event)"
                 class="file-input" />
+            </div>
+          </div>
+
+          <div class="mask-editor" *ngIf="uploadedImage">
+            <p>Draw over the damaged region. White strokes mark pixels to restore.</p>
+            <div class="mask-canvas-wrap">
+                <img #maskSource [src]="uploadedImage" alt="Image mask drawing context"
+                  (load)="prepareMaskCanvas(maskCanvas, maskSource)" />
+                <canvas #maskCanvas
+                  aria-label="Draw the damaged region mask"
+                  (pointerdown)="startMaskStroke($event, maskCanvas)"
+                  (pointermove)="continueMaskStroke($event, maskCanvas)"
+                  (pointerup)="finishMaskStroke(maskCanvas)"
+                  (pointercancel)="finishMaskStroke(maskCanvas)"
+                  (pointerleave)="finishMaskStroke(maskCanvas)"></canvas>
             </div>
           </div>
 
@@ -153,16 +164,23 @@ interface RestorationResult {
 
           <button
             (click)="runRestoration()"
-            [disabled]="!uploadedImage || isProcessing"
+            [disabled]="!canRestore"
             class="restore-btn"
             [class.processing]="isProcessing">
             <span *ngIf="!isProcessing">🚀 Run Restoration</span>
-            <span *ngIf="isProcessing">⏳ Processing... {{ processingProgress }}%</span>
+            <span *ngIf="isProcessing">⏳ Processing...</span>
           </button>
+          <label class="reference-upload">
+            Optional clean reference image for PSNR / SSIM / LPIPS (evaluation only)
+            <input type="file" accept="image/*" (change)="onReferenceSelected($event)" />
+          </label>
+          <p *ngIf="referenceImageFile">Evaluation reference: {{ referenceImageFile.name }}</p>
+          <p *ngIf="isUploading" class="upload-status">Uploading image before restoration...</p>
 
           <div *ngIf="errorMessage" class="error-message">
             ⚠️ {{ errorMessage }}
           </div>
+          <p *ngIf="lastSessionId">Session ID: <code>{{ lastSessionId }}</code></p>
         </div>
 
         <!-- Results Section -->
@@ -176,7 +194,7 @@ interface RestorationResult {
               <img [src]="restorationResult.originalImage" alt="Original" class="result-image" />
             </div>
 
-            <div class="result-item">
+            <div class="result-item" *ngIf="restorationResult.maskedImage">
               <div class="result-label">Masked</div>
               <img [src]="restorationResult.maskedImage" alt="Masked" class="result-image" />
             </div>
@@ -189,42 +207,48 @@ interface RestorationResult {
 
           <!-- Metrics Cards -->
           <div class="metrics-grid">
-            <div class="metric-card">
-              <div class="metric-label">SSIM</div>
-              <div class="metric-value" [class.good]="restorationResult.metrics.ssim > 0.8">
-                {{ restorationResult.metrics.ssim.toFixed(4) }}
+            <ng-container *ngIf="restorationResult.metrics as metrics">
+              <div class="metric-card">
+                <div class="metric-label">SSIM</div>
+                <div class="metric-value" [class.good]="metrics.ssim !== null && metrics.ssim > 0.8">
+                  {{ metrics.ssim !== null ? metrics.ssim.toFixed(4) : 'N/A' }}
+                </div>
+                <div class="metric-hint">Structural Similarity</div>
               </div>
-              <div class="metric-hint">Structural Similarity</div>
-            </div>
 
-            <div class="metric-card">
-              <div class="metric-label">PSNR</div>
-              <div class="metric-value" [class.good]="restorationResult.metrics.psnr > 25">
-                {{ restorationResult.metrics.psnr.toFixed(2) }} dB
+              <div class="metric-card">
+                <div class="metric-label">PSNR</div>
+                <div class="metric-value" [class.good]="metrics.psnrDb !== null && metrics.psnrDb > 25">
+                  {{ metrics.psnrDb !== null ? (metrics.psnrDb.toFixed(2) + ' dB') : 'N/A' }}
+                </div>
+                <div class="metric-hint">Peak Signal-to-Noise Ratio</div>
               </div>
-              <div class="metric-hint">Peak Signal-to-Noise Ratio</div>
-            </div>
+
+              <div class="metric-card">
+                <div class="metric-label">LPIPS</div>
+                <div class="metric-value">{{ metrics.lpips !== null ? metrics.lpips.toFixed(4) : 'N/A' }}</div>
+                <div class="metric-hint">Lower is better · {{ metrics.lpipsStatus }}</div>
+              </div>
+              <p class="metric-hint">{{ metrics.note }}</p>
+              <p *ngIf="metrics.referenceSha256" class="metric-hint">
+                Reference SHA-256: <code>{{ metrics.referenceSha256 }}</code>
+              </p>
+            </ng-container>
 
             <div class="metric-card">
               <div class="metric-label">Confidence</div>
-              <div class="metric-value" [class.good]="restorationResult.confidenceScore > 0.7">
-                {{ (restorationResult.confidenceScore * 100).toFixed(1) }}%
+              <div class="metric-value" *ngIf="restorationResult.confidenceScore !== null; else noConfidence"
+              [class.good]="restorationResult.confidenceScore > 70">
+              {{ restorationResult.confidenceScore.toFixed(1) }}%
               </div>
-              <div class="metric-hint">Model Confidence</div>
-            </div>
-
-            <div class="metric-card">
-              <div class="metric-label">MSE</div>
-              <div class="metric-value">
-                {{ restorationResult.metrics.mse.toFixed(4) }}
-              </div>
-              <div class="metric-hint">Mean Squared Error</div>
+              <ng-template #noConfidence><div class="metric-value">Not provided</div></ng-template>
+              <div class="metric-hint">{{ restorationResult.confidenceMetric || 'Model confidence' }}</div>
             </div>
 
             <div class="metric-card">
               <div class="metric-label">Processing Time</div>
               <div class="metric-value">
-                {{ restorationResult.processingTimeMsMs.toFixed(0) }} ms
+                {{ restorationResult.processingTimeMsMs !== null ? (restorationResult.processingTimeMsMs.toFixed(0) + ' ms') : 'N/A' }}
               </div>
               <div class="metric-hint">Backend Processing</div>
             </div>
@@ -235,7 +259,7 @@ interface RestorationResult {
             <button (click)="downloadResult('original')" class="download-btn">
               💾 Download Original
             </button>
-            <button (click)="downloadResult('masked')" class="download-btn">
+            <button *ngIf="restorationResult.maskedImage" (click)="downloadResult('masked')" class="download-btn">
               💾 Download Masked
             </button>
             <button (click)="downloadResult('restored')" class="download-btn">
@@ -481,6 +505,45 @@ interface RestorationResult {
       border-radius: 6px;
     }
 
+    .mask-canvas-wrap {
+      position: relative;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #f0f2f5;
+      touch-action: none;
+    }
+
+    .mask-canvas-wrap img {
+      display: block;
+      max-width: 100%;
+      max-height: 60vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .mask-canvas-wrap canvas {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      max-width: 100%;
+      max-height: 60vh;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .upload-status {
+      margin: 10px 0 0;
+      color: #555;
+      text-align: center;
+    }
+
     .mask-type-selector,
     .mask-ratio-slider {
       display: flex;
@@ -709,31 +772,51 @@ interface RestorationResult {
     .reset-btn:hover {
       background: #616161;
     }
+
   `]
 })
 export class GanRestorationComponent implements OnInit {
+  @Output() readonly restorationCompleted = new EventEmitter<string>();
+
   // Upload state
   uploadedImage: string | null = null;
+  uploadedImageFile: File | null = null;
+  referenceImageFile: File | null = null;
+  uploadedImageRecord: StoredFileResponse | null = null;
+  isUploading = false;
   isDragover = false;
 
   // Mask state
   currentMask: string | null = null;
-  selectedMaskType = 'irregular';
-  maskRatio = 0.3;
+  maskFile: File | null = null;
+  restorationMode: 'auto' | 'masked' = 'masked';
+  isDrawingMask = false;
 
   // Processing state
   isProcessing = false;
-  processingProgress = 0;
   errorMessage = '';
 
   // Results
   restorationResult: RestorationResult | null = null;
+  lastSessionId = '';
+  @ViewChild('maskCanvas') private maskCanvas?: ElementRef<HTMLCanvasElement>;
 
   // Backend status
   backendStatus: 'connected' | 'error' | 'checking' = 'checking';
   backendStatusMessage = '🔍 Checking backend connection...';
 
-  constructor(private apiService: ServerApiService) {}
+  get canRestore(): boolean {
+    return !!this.uploadedImageRecord
+      && !!this.uploadedImage
+      && !this.isUploading
+      && !this.isProcessing
+      && (this.restorationMode !== 'masked' || !!this.maskFile);
+  }
+
+  constructor(
+    private apiService: ServerApiService,
+    private backendApi: BackendApiService
+  ) {}
 
   ngOnInit() {
     this.checkBackendConnection();
@@ -747,8 +830,7 @@ export class GanRestorationComponent implements OnInit {
       response => {
         if (response.success) {
           this.backendStatus = 'connected';
-          this.backendStatusMessage =
-            '✅ Backend connected: ' + response.data?.device?.toUpperCase() || 'CPU';
+          this.backendStatusMessage = '✅ Backend API is responding.';
         } else {
           this.backendStatus = 'error';
           this.backendStatusMessage = '❌ Backend unavailable. Ensure backend is running on port 8000.';
@@ -791,6 +873,27 @@ export class GanRestorationComponent implements OnInit {
   }
 
   handleFileUpload(file: File) {
+    this.uploadedImageFile = file;
+    this.referenceImageFile = null;
+    this.uploadedImageRecord = null;
+    this.isUploading = true;
+    this.currentMask = null;
+    this.maskFile = null;
+    this.restorationResult = null;
+    this.lastSessionId = '';
+    this.errorMessage = '';
+    this.backendApi.uploadImage(file).subscribe({
+      next: storedFile => {
+        if (this.uploadedImageFile !== file) return;
+        this.uploadedImageRecord = storedFile;
+        this.isUploading = false;
+      },
+      error: (error: HttpErrorResponse) => {
+        if (this.uploadedImageFile !== file) return;
+        this.isUploading = false;
+        this.errorMessage = this.apiErrorMessage(error);
+      }
+    });
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent<FileReader>) => {
       if (typeof e.target?.result === 'string') {
@@ -803,14 +906,22 @@ export class GanRestorationComponent implements OnInit {
 
   clearUpload() {
     this.uploadedImage = null;
+    this.uploadedImageFile = null;
+    this.referenceImageFile = null;
+    this.uploadedImageRecord = null;
+    this.isUploading = false;
     this.currentMask = null;
+    this.maskFile = null;
     this.restorationResult = null;
+    this.lastSessionId = '';
+    this.errorMessage = '';
   }
 
   // Mask Handlers
   onMaskFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
+      this.maskFile = input.files[0];
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         if (typeof e.target?.result === 'string') {
@@ -821,83 +932,157 @@ export class GanRestorationComponent implements OnInit {
     }
   }
 
-  generateRandomMask() {
-    this.isProcessing = true;
-    this.processingProgress = 25;
-
-    this.apiService
-      .generateMask(this.selectedMaskType, 512, 512, this.maskRatio)
-      .subscribe(
-        response => {
-          this.isProcessing = false;
-          if (response.success) {
-            this.currentMask = response.data.mask;
-            this.processingProgress = 0;
-          } else {
-            this.errorMessage = 'Failed to generate mask: ' + response.error;
-          }
-        },
-        error => {
-          this.isProcessing = false;
-          this.errorMessage = 'Error generating mask: ' + error.message;
-        }
-      );
+  onReferenceSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.referenceImageFile = input.files?.[0] ?? null;
   }
 
-  clearMask() {
+  prepareMaskCanvas(canvas: HTMLCanvasElement, image: HTMLImageElement): void {
+    if (!image.naturalWidth || !image.naturalHeight) return;
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+    this.maskFile = null;
     this.currentMask = null;
+  }
+
+  startMaskStroke(event: PointerEvent, canvas: HTMLCanvasElement): void {
+    if (!this.uploadedImageFile || !this.uploadedImage) return;
+    const context = canvas.getContext('2d');
+    if (!context) {
+      this.errorMessage = 'Unable to initialize the mask canvas.';
+      return;
+    }
+    event.preventDefault();
+    canvas.setPointerCapture(event.pointerId);
+    this.isDrawingMask = true;
+    context.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    context.lineWidth = Math.max(8, Math.min(canvas.width, canvas.height) * 0.025);
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
+    const point = this.canvasPoint(event, canvas);
+    context.beginPath();
+    context.moveTo(point.x, point.y);
+    context.lineTo(point.x + 0.1, point.y + 0.1);
+    context.stroke();
+  }
+
+  continueMaskStroke(event: PointerEvent, canvas: HTMLCanvasElement): void {
+    if (!this.isDrawingMask) return;
+    const context = canvas.getContext('2d');
+    if (!context) return;
+    const point = this.canvasPoint(event, canvas);
+    context.lineTo(point.x, point.y);
+    context.stroke();
+  }
+
+  finishMaskStroke(canvas: HTMLCanvasElement): void {
+    if (!this.isDrawingMask) return;
+    this.isDrawingMask = false;
+    canvas.toBlob(blob => {
+      if (!blob) {
+        this.errorMessage = 'Unable to encode the damage mask.';
+        return;
+      }
+      this.maskFile = new File([blob], 'damage-mask.png', { type: 'image/png' });
+      this.currentMask = canvas.toDataURL('image/png');
+    }, 'image/png');
+  }
+
+  private canvasPoint(event: PointerEvent, canvas: HTMLCanvasElement): { x: number; y: number } {
+    const bounds = canvas.getBoundingClientRect();
+    return {
+      x: (event.clientX - bounds.left) * canvas.width / bounds.width,
+      y: (event.clientY - bounds.top) * canvas.height / bounds.height
+    };
+  }
+
+  clearMask(): void {
+    this.currentMask = null;
+    this.maskFile = null;
+    const canvas = this.maskCanvas?.nativeElement;
+    canvas?.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   // Main Restoration Handler
   runRestoration() {
-    if (!this.uploadedImage) {
-      this.errorMessage = 'Please upload an image first.';
+    if (!this.uploadedImage || !this.uploadedImageFile) {
+      this.errorMessage = 'Please select an image first.';
+      return;
+    }
+    if (this.isUploading || !this.uploadedImageRecord) {
+      this.errorMessage = 'Wait for the image upload to finish before restoring it.';
+      return;
+    }
+    if (this.restorationMode === 'masked' && !this.maskFile) {
+      this.errorMessage = 'Draw or upload a mask before selecting masked restoration.';
       return;
     }
 
     this.isProcessing = true;
-    this.processingProgress = 0;
     this.errorMessage = '';
+    this.lastSessionId = '';
 
-    // Simulate progress updates
-    const progressInterval = setInterval(() => {
-      if (this.processingProgress < 90) {
-        this.processingProgress += Math.random() * 20;
+    this.backendApi.restoreImage(
+      this.uploadedImageRecord.file_id,
+      this.restorationMode === 'masked' ? this.maskFile : null,
+      this.restorationMode,
+      this.referenceImageFile
+    ).subscribe({
+      next: response => this.applyRestorationResult(response),
+      error: (error: HttpErrorResponse) => {
+        this.isProcessing = false;
+        this.errorMessage = this.apiErrorMessage(error);
       }
-    }, 500);
+    });
+  }
 
-    this.apiService
-      .restoreImage(
-        this.uploadedImage,
-        this.currentMask || undefined,
-        this.selectedMaskType,
-        this.maskRatio
-      )
-      .subscribe(
-        response => {
-          clearInterval(progressInterval);
-          this.isProcessing = false;
-          this.processingProgress = 100;
+  private applyRestorationResult(response: RestorationResponse): void {
+    this.lastSessionId = response.session_id;
+    this.isProcessing = false;
+    if (response.status !== 'completed' || !response.restored_image) {
+      this.errorMessage = 'The backend did not return a completed image restoration.';
+      return;
+    }
+    this.restorationResult = {
+      sessionId: response.session_id,
+      originalImage: response.original_image || this.uploadedImage || '',
+      maskedImage: response.mask_image || null,
+      restoredImage: response.restored_image,
+      confidenceScore: response.confidence_score ?? null,
+      confidenceMetric: response.confidence_metric ?? null,
+      metrics: this.readImageMetrics(response.metrics),
+      processingTimeMsMs: response.inference_time_ms ?? null
+    };
+    this.restorationCompleted.emit(response.session_id);
+  }
 
-          if (response.success) {
-            this.restorationResult = {
-              originalImage: response.data.original_image,
-              maskedImage: response.data.masked_image,
-              restoredImage: response.data.restored_image,
-              confidenceScore: response.data.confidence_score,
-              metrics: response.data.metrics,
-              processingTimeMsMs: response.data.processing_time_ms
-            };
-          } else {
-            this.errorMessage = 'Restoration failed: ' + response.error;
-          }
-        },
-        error => {
-          clearInterval(progressInterval);
-          this.isProcessing = false;
-          this.errorMessage = 'Restoration error: ' + error.message;
-        }
-      );
+  private readImageMetrics(metrics: Record<string, unknown> | null | undefined): ImageQualityMetrics {
+    const value = (key: string): number | null => {
+      const metric = metrics?.[key];
+      return typeof metric === 'number' && Number.isFinite(metric) ? metric : null;
+    };
+    return {
+      qualityReferenceAvailable: metrics?.['quality_reference_available'] === true,
+      psnrDb: value('psnr_db'),
+      ssim: value('ssim'),
+      lpips: value('lpips'),
+      lpipsStatus: typeof metrics?.['lpips_status'] === 'string'
+        ? metrics['lpips_status'] : 'not computed',
+      note: typeof metrics?.['quality_metric_note'] === 'string'
+        ? metrics['quality_metric_note'] : 'Clean reference metrics were not returned.',
+      referenceSha256: typeof metrics?.['reference_sha256'] === 'string'
+        ? metrics['reference_sha256'] : null
+    };
+  }
+
+  private apiErrorMessage(error: HttpErrorResponse): string {
+    const detail = error.error?.detail;
+    if (typeof detail === 'object' && detail !== null) {
+      if (typeof detail.session_id === 'string') this.lastSessionId = detail.session_id;
+      return typeof detail.message === 'string' ? detail.message : 'Backend restoration failed.';
+    }
+    return typeof detail === 'string' ? detail : error.message || 'Backend restoration failed.';
   }
 
   // Download Results
@@ -911,6 +1096,7 @@ export class GanRestorationComponent implements OnInit {
     };
 
     const image = images[type];
+    if (!image.data) return;
     const link = document.createElement('a');
     link.href = image.data;
     link.download = `forensic_${image.name}_${new Date().getTime()}.png`;
@@ -920,9 +1106,13 @@ export class GanRestorationComponent implements OnInit {
   // Reset Workflow
   resetWorkflow() {
     this.uploadedImage = null;
+    this.uploadedImageFile = null;
+    this.uploadedImageRecord = null;
     this.currentMask = null;
+    this.maskFile = null;
     this.restorationResult = null;
     this.errorMessage = '';
-    this.processingProgress = 0;
+    this.lastSessionId = '';
+    this.isUploading = false;
   }
 }

@@ -40,6 +40,11 @@ testem.log
 # Lighthouse CI local runs
 .lighthouseci/
 
+# Model weights and checkpoints
+/models/**/*.pt
+/models/**/*.pth
+/models/**/*.ckpt
+
 # System files
 .DS_Store
 Thumbs.db

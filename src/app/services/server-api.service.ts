@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { API_BASE_URL } from './backend-api.service';
 
 export interface ApiHealthCheck {
   status: 'healthy' | 'degraded' | 'unhealthy';
@@ -25,7 +26,7 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class ServerApiService {
-  private apiBaseUrl = '/api';
+  private apiBaseUrl = API_BASE_URL;
   private readonly REQUEST_TIMEOUT = 10000;
 
   constructor(private http: HttpClient) {}
@@ -321,9 +322,7 @@ export class ServerApiService {
    * Check backend health status
    */
   checkBackendHealth(): Observable<any> {
-    const backendUrl = 'http://localhost:8000';
-
-    return this.http.get<any>(`${backendUrl}/health`).pipe(
+    return this.http.get<any>(`${this.apiBaseUrl}/health`).pipe(
       map(data => ({
         success: true,
         data,

@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap, catchError, of } from 'rxjs';
+import { API_BASE_URL } from './backend-api.service';
 
 export interface LoginRequest {
   email: string;
@@ -33,7 +34,7 @@ export interface AuthToken {
 export class AuthService {
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
-  private apiUrl = '/api/auth'; // Configure this based on your backend
+  private apiUrl = `${API_BASE_URL}/auth`;
 
   private currentUserSubject = new BehaviorSubject<LoginResponse['user'] | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -52,13 +53,7 @@ export class AuthService {
    */
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials)
-      .pipe(
-        tap(response => this.handleLoginSuccess(response)),
-        catchError(error => {
-          console.error('Login failed:', error);
-          return of(null as any);
-        })
-      );
+      .pipe(tap(response => this.handleLoginSuccess(response)));
   }
 
   /**
@@ -72,10 +67,6 @@ export class AuthService {
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
 
-    // Optional: Call backend logout endpoint
-    this.http.post(`${this.apiUrl}/logout`, {}).subscribe({
-      error: (err) => console.error('Backend logout failed:', err)
-    });
   }
 
   /**
@@ -102,13 +93,7 @@ export class AuthService {
       password,
       name
     })
-      .pipe(
-        tap(response => this.handleLoginSuccess(response)),
-        catchError(error => {
-          console.error('Registration failed:', error);
-          return of(null as any);
-        })
-      );
+      .pipe(tap(response => this.handleLoginSuccess(response)));
   }
 
   /**
@@ -146,7 +131,7 @@ export class AuthService {
    */
   getToken(): string | null {
     const tokenData = this.getStoredToken();
-    if (tokenData && this.isTokenExpired(tokenData.expiresAt)) {
+    if (tokenData && !this.isTokenExpired(tokenData.expiresAt)) {
       return tokenData.accessToken;
     }
     return null;

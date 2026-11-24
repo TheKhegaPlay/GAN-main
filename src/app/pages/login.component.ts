@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +15,26 @@ import { Router } from '@angular/router';
     <div class="login-container">
       <div class="login-box">
         <div class="login-header">
-          <h1>🔐 Forensic Platform Login</h1>
+          <h1>🔐 {{ isRegistering ? 'Create account' : 'Forensic Platform Login' }}</h1>
           <p>GAN-based Evidence Restoration System</p>
         </div>
 
         <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+          <div class="form-group" *ngIf="isRegistering">
+            <label for="name">Full Name</label>
+            <input
+              formControlName="name"
+              type="text"
+              id="name"
+              autocomplete="name"
+              placeholder="Investigator name"
+              class="form-input"
+            />
+            <div *ngIf="loginForm.get('name')?.invalid && loginForm.get('name')?.touched">
+              <span class="error-message">Full name is required</span>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="email">Email Address</label>
             <input
@@ -41,6 +58,7 @@ import { Router } from '@angular/router';
               formControlName="password"
               type="password"
               id="password"
+              [attr.autocomplete]="isRegistering ? 'new-password' : 'current-password'"
               placeholder="Enter your password"
               class="form-input"
             />
@@ -48,7 +66,9 @@ import { Router } from '@angular/router';
               <span class="error-message">Password is required</span>
             </div>
             <div *ngIf="loginForm.get('password')?.hasError('minlength') && loginForm.get('password')?.touched">
-              <span class="error-message">Password must be at least 6 characters</span>
+              <span class="error-message">
+                Password must be at least {{ isRegistering ? 10 : 6 }} characters
+              </span>
             </div>
           </div>
 
@@ -61,15 +81,13 @@ import { Router } from '@angular/router';
             [disabled]="isLoading"
             class="submit-button"
           >
-            {{ isLoading ? 'Logging in...' : 'Login' }}
+            {{ isLoading ? 'Please wait...' : isRegistering ? 'Create account' : 'Login' }}
           </button>
         </form>
 
-        <div class="demo-info">
-          <p><strong>Demo Credentials:</strong></p>
-          <p>Email: demo&#64;forensics.gov</p>
-          <p>Password: demo123</p>
-        </div>
+        <button type="button" class="mode-toggle" (click)="toggleMode()" [disabled]="isLoading">
+          {{ isRegistering ? 'Already have an account? Sign in' : 'New investigator? Create an account' }}
+        </button>
       </div>
 
       <div class="footer-info">
@@ -204,21 +222,20 @@ import { Router } from '@angular/router';
       cursor: not-allowed;
     }
 
-    .demo-info {
-      margin-top: 30px;
-      padding: 15px;
-      background: #f3f4f6;
-      border-radius: 8px;
-      font-size: 13px;
-      color: #666;
+    .mode-toggle {
+      display: block;
+      margin: 18px auto 0;
+      padding: 8px;
+      border: 0;
+      background: transparent;
+      color: #4f46a5;
+      font: inherit;
+      cursor: pointer;
     }
 
-    .demo-info p {
-      margin: 5px 0;
-    }
-
-    .demo-info strong {
-      color: #333;
+    .mode-toggle:disabled {
+      cursor: not-allowed;
+      opacity: .6;
     }
 
     .footer-info {
@@ -237,12 +254,32 @@ export class LoginComponent {
   loginForm: FormGroup;
   isLoading = false;
   errorMessage: string | null = null;
+  isRegistering = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
+      name: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  toggleMode(): void {
+    this.isRegistering = !this.isRegistering;
+    const name = this.loginForm.get('name');
+    const password = this.loginForm.get('password');
+    name?.setValidators(this.isRegistering ? [Validators.required] : []);
+    password?.setValidators([
+      Validators.required,
+      Validators.minLength(this.isRegistering ? 10 : 6)
+    ]);
+    name?.updateValueAndValidity();
+    password?.updateValueAndValidity();
+    this.errorMessage = null;
   }
 
   onLogin() {
@@ -253,17 +290,30 @@ export class LoginComponent {
       return;
     }
 
-    const { email, password } = this.loginForm.value;
-    this.isLoading = true;
-
-    if (email === 'demo@forensics.gov' && password === 'demo123') {
-      sessionStorage.setItem('isAuthenticated', 'true');
-      this.router.navigate(['/gan-models']).finally(() => {
-        this.isLoading = false;
-      });
-    } else {
-      this.isLoading = false;
-      this.errorMessage = 'Invalid email or password';
+    const { name, email, password } = this.loginForm.value;
+    if (this.isRegistering && !String(name || '').trim()) {
+      this.errorMessage = 'Full name is required';
+      return;
     }
+
+    this.isLoading = true;
+    const request = this.isRegistering
+      ? this.authService.register(String(email).trim(), password, String(name).trim())
+      : this.authService.login({ email: String(email).trim(), password });
+
+    request.subscribe({
+      next: () => {
+        this.router.navigate(['/gan-models']).finally(() => {
+          this.isLoading = false;
+        });
+      },
+      error: (error: HttpErrorResponse) => {
+        const detail = error.error?.detail;
+        this.errorMessage = typeof detail === 'string'
+          ? detail
+          : error.message || 'Authentication failed. Please try again.';
+        this.isLoading = false;
+      }
+    });
   }
 }

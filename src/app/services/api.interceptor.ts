@@ -10,6 +10,7 @@ import {
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, retry, timeout, tap } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
+import { API_BASE_URL } from './backend-api.service';
 
 export interface ApiRequestConfig {
   retryAttempts?: number;
@@ -29,10 +30,10 @@ export class ApiInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Skip caching for non-GET requests
+    const cacheable = req.method === 'GET' && !req.url.startsWith(`${API_BASE_URL}/`);
     const cacheKey = `${req.method}-${req.url}`;
 
-    if (req.method === 'GET') {
+    if (cacheable) {
       const cached = this.getFromCache(cacheKey);
       if (cached) {
         return new Observable(observer => {
@@ -52,12 +53,18 @@ export class ApiInterceptor implements HttpInterceptor {
     this.requestsInProgress$.next(this.requestsInProgress$.value + 1);
 
     return next.handle(modifiedReq).pipe(
-      timeout(10000), // 10 second timeout
-      retry({ count: 1, delay: 500 }), // Retry once after 500ms
+      timeout(
+        req.url.includes('/restore/')
+          || req.url.includes('/report/generate')
+          || req.url.includes('/upload/')
+          ? 120000
+          : 10000
+      ),
+      retry({ count: req.method === 'GET' ? 1 : 0, delay: 500 }),
       tap(event => {
         if (event instanceof HttpResponse) {
           // Cache successful responses
-          if (req.method === 'GET') {
+          if (cacheable) {
             this.cacheResponse(cacheKey, event.body);
           }
 
@@ -105,8 +112,10 @@ export class ApiInterceptor implements HttpInterceptor {
     let headers = req.headers;
 
     // Add timestamp for cache busting if needed
-    if (req.method === 'GET') {
+    if (req.method === 'GET' && !req.url.startsWith(`${API_BASE_URL}/`)) {
       headers = headers.set('Cache-Control', 'public, max-age=300'); // 5 minutes
+    } else if (req.url.startsWith(`${API_BASE_URL}/`)) {
+      headers = headers.set('Cache-Control', 'no-store');
     }
 
     // Add request ID for tracing
@@ -116,7 +125,28 @@ export class ApiInterceptor implements HttpInterceptor {
     // Add API version header
     headers = headers.set('X-API-Version', '1.0');
 
+    const token = req.url.startsWith(`${API_BASE_URL}/`) ? this.getAccessToken() : null;
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
     return req.clone({ headers });
+  }
+
+  private getAccessToken(): string | null {
+    try {
+      const stored = this.document?.defaultView?.localStorage.getItem('authToken');
+      if (!stored) return null;
+      const tokenData = JSON.parse(stored) as { accessToken?: unknown; expiresAt?: unknown };
+      return typeof tokenData.accessToken === 'string'
+        && typeof tokenData.expiresAt === 'number'
+        && tokenData.expiresAt > Date.now()
+        ? tokenData.accessToken
+        : null;
+    } catch (error) {
+      console.error('Unable to read the stored authentication token:', error);
+      return null;
+    }
   }
 
   private cacheResponse(key: string, data: any): void {

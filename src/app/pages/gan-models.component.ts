@@ -3,12 +3,12 @@ import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { PerformanceMetricsComponent } from '../components/performance-metrics.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-gan-models',
   standalone: true,
-  imports: [CommonModule, DashboardComponent, PerformanceMetricsComponent],
+  imports: [CommonModule, DashboardComponent],
   template: `
     <div class="gan-models-container">
       <div class="header-bar">
@@ -22,7 +22,6 @@ import { PerformanceMetricsComponent } from '../components/performance-metrics.c
       </div>
 
       <div class="models-section">
-        <app-performance-metrics></app-performance-metrics>
         <app-dashboard></app-dashboard>
       </div>
     </div>
@@ -96,20 +95,23 @@ export class GanModelsComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   currentUser = 'Forensic Investigator';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     if (!isPlatformBrowser(this.platformId)) return;
-    if (!sessionStorage.getItem('isAuthenticated')) {
+    if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
+      return;
     }
+    this.currentUser = this.authService.getCurrentUser()?.name || 'Forensic Investigator';
   }
 
   logout() {
     if (confirm('Are you sure you want to logout?')) {
-      if (isPlatformBrowser(this.platformId)) {
-        sessionStorage.removeItem('isAuthenticated');
-      }
+      this.authService.logout();
       this.router.navigate(['/login']);
     }
   }

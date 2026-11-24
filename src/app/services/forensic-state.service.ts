@@ -64,17 +64,7 @@ export interface SystemError {
 const STORAGE_KEY = 'forensic_state_v1';
 
 const INITIAL_STATE: ForensicState = {
-  cases: [
-    {
-      id: 'case-1',
-      name: 'Damaged Image Case',
-      description: 'Investigation of damaged digital evidence with GAN restoration',
-      evidences: [
-        { id: 'ev-1', filename: 'fragment_01.png', status: 'uploaded', ganModel: 'ESRGAN' },
-        { id: 'ev-2', filename: 'fragment_02.png', status: 'processing', ganModel: 'GFPGAN' }
-      ]
-    }
-  ]
+  cases: []
 };
 
 @Injectable({ providedIn: 'root' })
